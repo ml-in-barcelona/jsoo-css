@@ -1,0 +1,11 @@
+(library
+ (name jsoo_css)
+ (public_name jsoo-css)
+ (modes js)
+ (libraries js_of_ocaml)
+ (preprocess
+  (pps js_of_ocaml-ppx)
+ )
+)
+
+(include_subdirs unqualified)

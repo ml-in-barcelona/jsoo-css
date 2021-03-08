@@ -1,0 +1,9 @@
+
+
+(rule
+ (target main.js)
+ (deps ../bin/main.bc.js)
+ (mode
+  (promote-until-clean-into static/))
+ (action
+  (copy %{deps} %{target})))
