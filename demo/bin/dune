@@ -1,5 +1,0 @@
-(executable
- (name main)
- (libraries jsoo_css_demo)
- (modules main)
- (modes js))

@@ -15,9 +15,10 @@
  (synopsis "Bindings to CSS in jsoo")
  (description "Bindsings to CSS in jsoo")
  (depends
-  js_of_ocaml
   (ocaml (>= 4.08.0))
   (dune (>= 2.0))
+  js_of_ocaml
+  js_of_ocaml-ppx
   (alcotest :with-test)
   (odoc :with-doc)
  )

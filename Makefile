@@ -39,8 +39,8 @@ all:
 .PHONY: dev
 dev: ## Install development dependencies
 	opam pin add -y ocaml-lsp-server https://github.com/ocaml/ocaml-lsp.git
-	opam install -y dune-release merlin ocamlformat utop ocaml-lsp-server
-	cd asset && npm install
+	opam install -y ocaml-lsp-server
+	cd demo/asset && npm install
 	opam install --deps-only --with-test --with-doc -y .
 
 .PHONY: build
@@ -53,7 +53,7 @@ install: all ## Install the packages on the system
 
 .PHONY: start
 start: all ## Serve the application with a local HTTP server
-	cd asset && npm start
+	cd demo/asset && npm start
 
 .PHONY: test
 test: ## Run the unit tests

@@ -1,6 +1,0 @@
-(library
- (name jsoo_css_test)
- (inline_tests (modes js))
- (libraries jsoo_css_demo)
- (preprocess (pps ppx_expect))
-)

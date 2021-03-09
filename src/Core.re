@@ -54,57 +54,57 @@ module Converter = {
 
   let string_of_content = x =>
     switch (x) {
-    | Content.t as c => Content.toString(c)
-    | Counter.t as c => Counter.toString(c)
-    | Counters.t as c => Counters.toString(c)
-    | Gradient.t as g => Gradient.toString(g)
-    | Url.t as u => Url.toString(u)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Content.t as c => Content.toString(c)
+    | #Counter.t as c => Counter.toString(c)
+    | #Counters.t as c => Counters.toString(c)
+    | #Gradient.t as g => Gradient.toString(g)
+    | #Url.t as u => Url.toString(u)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     };
   let string_of_counter_increment = x =>
     switch (x) {
-    | CounterIncrement.t as o => CounterIncrement.toString(o)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #CounterIncrement.t as o => CounterIncrement.toString(o)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     };
   let string_of_counter_reset = x =>
     switch (x) {
-    | CounterReset.t as o => CounterReset.toString(o)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #CounterReset.t as o => CounterReset.toString(o)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     };
   let string_of_counter_set = x =>
     switch (x) {
-    | CounterSet.t as o => CounterSet.toString(o)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #CounterSet.t as o => CounterSet.toString(o)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     };
 
   let string_of_column_gap =
     fun
-    | ColumnGap.t as gcg => ColumnGap.toString(gcg)
-    | Percentage.t as p => Percentage.toString(p)
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c);
+    | #ColumnGap.t as gcg => ColumnGap.toString(gcg)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c);
 
   let string_of_position =
     fun
     | `auto => "auto"
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c);
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c);
 
   let string_of_color =
     fun
-    | Color.t as co => Color.toString(co)
-    | Var.t as va => Var.toString(va);
+    | #Color.t as co => Color.toString(co)
+    | #Var.t as va => Var.toString(va);
 
   let string_of_dasharray =
     fun
-    | Percentage.t as p => Percentage.toString(p)
-    | Length.t as l => Length.toString(l);
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l);
 };
 
 include Converter;
@@ -127,12 +127,12 @@ let alignContent = x =>
   Declaration(
     "alignContent",
     switch (x) {
-    | AlignContent.t as ac => AlignContent.toString(ac)
-    | NormalAlignment.t as na => NormalAlignment.toString(na)
-    | BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
-    | DistributedAlignment.t as da => DistributedAlignment.toString(da)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #AlignContent.t as ac => AlignContent.toString(ac)
+    | #NormalAlignment.t as na => NormalAlignment.toString(na)
+    | #BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
+    | #DistributedAlignment.t as da => DistributedAlignment.toString(da)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -140,11 +140,11 @@ let alignItems = x =>
   Declaration(
     "alignItems",
     switch (x) {
-    | AlignItems.t as ai => AlignItems.toString(ai)
-    | PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
-    | BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #AlignItems.t as ai => AlignItems.toString(ai)
+    | #PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
+    | #BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -152,11 +152,11 @@ let alignSelf = x =>
   Declaration(
     "alignSelf",
     switch (x) {
-    | AlignSelf.t as a => AlignSelf.toString(a)
-    | PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
-    | BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #AlignSelf.t as a => AlignSelf.toString(a)
+    | #PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
+    | #BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -183,25 +183,25 @@ let backfaceVisibility = x =>
   Declaration(
     "backfaceVisibility",
     switch (x) {
-    | BackfaceVisibility.t as bv => BackfaceVisibility.toString(bv)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #BackfaceVisibility.t as bv => BackfaceVisibility.toString(bv)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
 let backdropFilter = x =>
   Declaration(
     "backdropFilter",
-    x->Belt.Array.map(Types.BackdropFilter.toString)->String.concat(", "),
+    x->Belt.Array.map(BackdropFilter.toString)->String.concat(", "),
   );
 
 let backgroundAttachment = x =>
   Declaration(
     "backgroundAttachment",
     switch (x) {
-    | BackgroundAttachment.t as ba => BackgroundAttachment.toString(ba)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #BackgroundAttachment.t as ba => BackgroundAttachment.toString(ba)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -211,9 +211,9 @@ let backgroundClip = x =>
   Declaration(
     "backgroundClip",
     switch (x) {
-    | BackgroundClip.t as bc => BackgroundClip.toString(bc)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #BackgroundClip.t as bc => BackgroundClip.toString(bc)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -221,9 +221,9 @@ let backgroundImage = x =>
   Declaration(
     "backgroundImage",
     switch (x) {
-    | BackgroundImage.t as bi => BackgroundImage.toString(bi)
-    | Url.t as u => Url.toString(u)
-    | Gradient.t as g => Gradient.toString(g)
+    | #BackgroundImage.t as bi => BackgroundImage.toString(bi)
+    | #Url.t as u => Url.toString(u)
+    | #Gradient.t as g => Gradient.toString(g)
     },
   );
 
@@ -231,32 +231,32 @@ let backgroundOrigin = x =>
   Declaration(
     "backgroundOrigin",
     switch (x) {
-    | BackgroundOrigin.t as bo => BackgroundOrigin.toString(bo)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #BackgroundOrigin.t as bo => BackgroundOrigin.toString(bo)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
 let string_of_backgroundposition =
   fun
-  | BackgroundPosition.t as bp => BackgroundPosition.toString(bp)
+  | #BackgroundPosition.t as bp => BackgroundPosition.toString(bp)
   | `hv(h, v) =>
     (
       switch (h) {
-      | BackgroundPosition.X.t as h => BackgroundPosition.X.toString(h)
-      | Length.t as l => Length.toString(l)
+      | #BackgroundPosition.X.t as h => BackgroundPosition.X.toString(h)
+      | #Length.t as l => Length.toString(l)
       }
     )
     ++ " "
     ++ (
       switch (v) {
-      | BackgroundPosition.Y.t as v => BackgroundPosition.Y.toString(v)
-      | Length.t as l => Length.toString(l)
+      | #BackgroundPosition.Y.t as v => BackgroundPosition.Y.toString(v)
+      | #Length.t as l => Length.toString(l)
       }
     )
-  | Length.t as l => Length.toString(l)
-  | Var.t as va => Var.toString(va)
-  | Cascading.t as c => Cascading.toString(c);
+  | #Length.t as l => Length.toString(l)
+  | #Var.t as va => Var.toString(va)
+  | #Cascading.t as c => Cascading.toString(c);
 
 let backgroundPosition = x =>
   Declaration("backgroundPosition", string_of_backgroundposition(x));
@@ -283,11 +283,11 @@ let backgroundRepeat = x =>
   Declaration(
     "backgroundRepeat",
     switch (x) {
-    | BackgroundRepeat.t as br => BackgroundRepeat.toString(br)
+    | #BackgroundRepeat.t as br => BackgroundRepeat.toString(br)
     | `hv(#BackgroundRepeat.horizontal as h, #BackgroundRepeat.vertical as v) =>
       BackgroundRepeat.toString(h) ++ " " ++ BackgroundRepeat.toString(v)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -305,9 +305,9 @@ let borderCollapse = x =>
   Declaration(
     "borderCollapse",
     switch (x) {
-    | BorderCollapse.t as bc => BorderCollapse.toString(bc)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #BorderCollapse.t as bc => BorderCollapse.toString(bc)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -342,9 +342,9 @@ let boxSizing = x =>
   Declaration(
     "boxSizing",
     switch (x) {
-    | BoxSizing.t as bs => BoxSizing.toString(bs)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #BoxSizing.t as bs => BoxSizing.toString(bs)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -352,9 +352,9 @@ let clear = x =>
   Declaration(
     "clear",
     switch (x) {
-    | Clear.t as cl => Clear.toString(cl)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Clear.t as cl => Clear.toString(cl)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -362,11 +362,11 @@ let clipPath = x =>
   Declaration(
     "clipPath",
     switch (x) {
-    | ClipPath.t as cp => ClipPath.toString(cp)
-    | Url.t as u => Url.toString(u)
-    | GeometyBox.t as gb => GeometyBox.toString(gb)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #ClipPath.t as cp => ClipPath.toString(cp)
+    | #Url.t as u => Url.toString(u)
+    | #GeometyBox.t as gb => GeometyBox.toString(gb)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -376,9 +376,9 @@ let columnCount = x =>
   Declaration(
     "columnCount",
     switch (x) {
-    | ColumnCount.t as cc => ColumnCount.toString(cc)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #ColumnCount.t as cc => ColumnCount.toString(cc)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -410,9 +410,9 @@ let direction = x =>
   Declaration(
     "direction",
     switch (x) {
-    | Direction.t as d => Direction.toString(d)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Direction.t as d => Direction.toString(d)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -420,14 +420,14 @@ let display = x =>
   Declaration(
     "display",
     switch (x) {
-    | DisplayOutside.t as o => DisplayOutside.toString(o)
-    | DisplayInside.t as i => DisplayInside.toString(i)
-    | DisplayListItem.t as l => DisplayListItem.toString(l)
-    | DisplayInternal.t as i' => DisplayInternal.toString(i')
-    | DisplayBox.t as b => DisplayBox.toString(b)
-    | DisplayLegacy.t as l' => DisplayLegacy.toString(l')
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #DisplayOutside.t as o => DisplayOutside.toString(o)
+    | #DisplayInside.t as i => DisplayInside.toString(i)
+    | #DisplayListItem.t as l => DisplayListItem.toString(l)
+    | #DisplayInternal.t as i' => DisplayInternal.toString(i')
+    | #DisplayBox.t as b => DisplayBox.toString(b)
+    | #DisplayLegacy.t as l' => DisplayLegacy.toString(l')
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -435,7 +435,7 @@ let flex = x =>
   Declaration(
     "flex",
     switch (x) {
-    | Flex.t as f => Flex.toString(f)
+    | #Flex.t as f => Flex.toString(f)
     | `num(n) => Js.Float.toString(n)
     },
   );
@@ -444,9 +444,9 @@ let flexDirection = x =>
   Declaration(
     "flexDirection",
     switch (x) {
-    | FlexDirection.t as fd => FlexDirection.toString(fd)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #FlexDirection.t as fd => FlexDirection.toString(fd)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -458,9 +458,9 @@ let flexWrap = x =>
   Declaration(
     "flexWrap",
     switch (x) {
-    | FlexWrap.t as fw => FlexWrap.toString(fw)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #FlexWrap.t as fw => FlexWrap.toString(fw)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -468,9 +468,9 @@ let float = x =>
   Declaration(
     "float",
     switch (x) {
-    | Float.t as f => Float.toString(f)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Float.t as f => Float.toString(f)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -478,9 +478,9 @@ let fontFamily = x =>
   Declaration(
     "fontFamily",
     switch (x) {
-    | FontFamilyName.t as n => FontFamilyName.toString(n)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #FontFamilyName.t as n => FontFamilyName.toString(n)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -491,9 +491,9 @@ let fontSize = x =>
   Declaration(
     "fontSize",
     switch (x) {
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -501,9 +501,9 @@ let fontStyle = x =>
   Declaration(
     "fontStyle",
     switch (x) {
-    | FontStyle.t as f => FontStyle.toString(f)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #FontStyle.t as f => FontStyle.toString(f)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -511,9 +511,9 @@ let fontVariant = x =>
   Declaration(
     "fontVariant",
     switch (x) {
-    | FontVariant.t as f => FontVariant.toString(f)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #FontVariant.t as f => FontVariant.toString(f)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -521,9 +521,9 @@ let fontWeight = x =>
   Declaration(
     "fontWeight",
     switch (x) {
-    | FontWeight.t as f => FontWeight.toString(f)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #FontWeight.t as f => FontWeight.toString(f)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -531,9 +531,9 @@ let gridAutoFlow = x =>
   Declaration(
     "gridAutoFlow",
     switch (x) {
-    | GridAutoFlow.t as f => GridAutoFlow.toString(f)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #GridAutoFlow.t as f => GridAutoFlow.toString(f)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -553,10 +553,10 @@ let gridGap = x =>
   Declaration(
     "gridGap",
     switch (x) {
-    | Percentage.t as p => Percentage.toString(p)
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -564,10 +564,10 @@ let gridRowGap = x =>
   Declaration(
     "gridRowGap",
     switch (x) {
-    | Percentage.t as p => Percentage.toString(p)
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -579,11 +579,11 @@ let height = x =>
   Declaration(
     "height",
     switch (x) {
-    | Height.t as h => Height.toString(h)
-    | Percentage.t as p => Percentage.toString(p)
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Height.t as h => Height.toString(h)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -591,11 +591,11 @@ let justifyContent = x =>
   Declaration(
     "justifyContent",
     switch (x) {
-    | PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
-    | NormalAlignment.t as na => NormalAlignment.toString(na)
-    | DistributedAlignment.t as da => DistributedAlignment.toString(da)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
+    | #NormalAlignment.t as na => NormalAlignment.toString(na)
+    | #DistributedAlignment.t as da => DistributedAlignment.toString(da)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -603,13 +603,13 @@ let justifyItems = x =>
   Declaration(
     "justifyItems",
     switch (x) {
-    | PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
-    | NormalAlignment.t as na => NormalAlignment.toString(na)
-    | BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
-    | OverflowAlignment.t as oa => OverflowAlignment.toString(oa)
-    | LegacyAlignment.t as la => LegacyAlignment.toString(la)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
+    | #NormalAlignment.t as na => NormalAlignment.toString(na)
+    | #BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
+    | #OverflowAlignment.t as oa => OverflowAlignment.toString(oa)
+    | #LegacyAlignment.t as la => LegacyAlignment.toString(la)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -619,10 +619,10 @@ let letterSpacing = x =>
   Declaration(
     "letterSpacing",
     switch (x) {
-    | LetterSpacing.t as s => LetterSpacing.toString(s)
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #LetterSpacing.t as s => LetterSpacing.toString(s)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -630,10 +630,10 @@ let lineHeight = x =>
   Declaration(
     "lineHeight",
     switch (x) {
-    | LineHeight.t as h => LineHeight.toString(h)
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #LineHeight.t as h => LineHeight.toString(h)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -646,8 +646,8 @@ let listStyle = (style, position, image) =>
     ++ " "
     ++ (
       switch (image) {
-      | ListStyleImage.t as lsi => ListStyleImage.toString(lsi)
-      | Url.t as u => Url.toString(u)
+      | #ListStyleImage.t as lsi => ListStyleImage.toString(lsi)
+      | #Url.t as u => Url.toString(u)
       }
     ),
   );
@@ -656,10 +656,10 @@ let listStyleImage = x =>
   Declaration(
     "listStyleImage",
     switch (x) {
-    | ListStyleImage.t as lsi => ListStyleImage.toString(lsi)
-    | Url.t as u => Url.toString(u)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #ListStyleImage.t as lsi => ListStyleImage.toString(lsi)
+    | #Url.t as u => Url.toString(u)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -667,9 +667,9 @@ let listStyleType = x =>
   Declaration(
     "listStyleType",
     switch (x) {
-    | ListStyleType.t as lsp => ListStyleType.toString(lsp)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #ListStyleType.t as lsp => ListStyleType.toString(lsp)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -677,18 +677,18 @@ let listStylePosition = x =>
   Declaration(
     "listStylePosition",
     switch (x) {
-    | ListStylePosition.t as lsp => ListStylePosition.toString(lsp)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #ListStylePosition.t as lsp => ListStylePosition.toString(lsp)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
 let marginToString = x =>
   switch (x) {
-  | Length.t as l => Length.toString(l)
-  | Margin.t as m => Margin.toString(m)
-  | Var.t as va => Var.toString(va)
-  | Cascading.t as c => Cascading.toString(c)
+  | #Length.t as l => Length.toString(l)
+  | #Margin.t as m => Margin.toString(m)
+  | #Var.t as va => Var.toString(va)
+  | #Cascading.t as c => Cascading.toString(c)
   };
 
 let margin = x => Declaration("margin", marginToString(x));
@@ -723,11 +723,11 @@ let maxHeight = x =>
   Declaration(
     "maxHeight",
     switch (x) {
-    | MaxHeight.t as mh => MaxHeight.toString(mh)
-    | Percentage.t as p => Percentage.toString(p)
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #MaxHeight.t as mh => MaxHeight.toString(mh)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -735,11 +735,11 @@ let maxWidth = x =>
   Declaration(
     "maxWidth",
     switch (x) {
-    | MaxWidth.t as mw => MaxWidth.toString(mw)
-    | Percentage.t as p => Percentage.toString(p)
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #MaxWidth.t as mw => MaxWidth.toString(mw)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -747,11 +747,11 @@ let minHeight = x =>
   Declaration(
     "minHeight",
     switch (x) {
-    | Height.t as h => Height.toString(h)
-    | Percentage.t as p => Percentage.toString(p)
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Height.t as h => Height.toString(h)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -759,11 +759,11 @@ let minWidth = x =>
   Declaration(
     "minWidth",
     switch (x) {
-    | Width.t as w => Width.toString(w)
-    | Percentage.t as p => Percentage.toString(p)
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Width.t as w => Width.toString(w)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -771,9 +771,9 @@ let objectFit = x =>
   Declaration(
     "objectFit",
     switch (x) {
-    | ObjectFit.t as o => ObjectFit.toString(o)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #ObjectFit.t as o => ObjectFit.toString(o)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -804,9 +804,9 @@ let overflowWrap = x =>
   Declaration(
     "overflowWrap",
     switch (x) {
-    | OverflowWrap.t as ow => OverflowWrap.toString(ow)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #OverflowWrap.t as ow => OverflowWrap.toString(ow)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -846,10 +846,10 @@ let perspective = x =>
   Declaration(
     "perspective",
     switch (x) {
-    | Perspective.t as p => Perspective.toString(p)
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Perspective.t as p => Perspective.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -858,15 +858,15 @@ let perspectiveOrigin = (x, y) =>
     "perspectiveOrigin",
     (
       switch (x) {
-      | Perspective.t as p => Perspective.toString(p)
-      | Length.t as l => Length.toString(l)
+      | #Perspective.t as p => Perspective.toString(p)
+      | #Length.t as l => Length.toString(l)
       }
     )
     ++ " "
     ++ (
       switch (y) {
-      | Perspective.t as p => Perspective.toString(p)
-      | Length.t as l => Length.toString(l)
+      | #Perspective.t as p => Perspective.toString(p)
+      | #Length.t as l => Length.toString(l)
       }
     ),
   );
@@ -875,9 +875,9 @@ let pointerEvents = x =>
   Declaration(
     "pointerEvents",
     switch (x) {
-    | PointerEvents.t as p => PointerEvents.toString(p)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #PointerEvents.t as p => PointerEvents.toString(p)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -885,9 +885,9 @@ let position = x =>
   Declaration(
     "position",
     switch (x) {
-    | Position.t as p => Position.toString(p)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Position.t as p => Position.toString(p)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -895,11 +895,11 @@ let justifySelf = x =>
   Declaration(
     "justifySelf",
     switch (x) {
-    | JustifySelf.t as j => JustifySelf.toString(j)
-    | PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
-    | BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #JustifySelf.t as j => JustifySelf.toString(j)
+    | #PositionalAlignment.t as pa => PositionalAlignment.toString(pa)
+    | #BaselineAlignment.t as ba => BaselineAlignment.toString(ba)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -907,9 +907,9 @@ let resize = x =>
   Declaration(
     "resize",
     switch (x) {
-    | Resize.t as r => Resize.toString(r)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Resize.t as r => Resize.toString(r)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -919,9 +919,9 @@ let tableLayout = x =>
   Declaration(
     "tableLayout",
     switch (x) {
-    | TableLayout.t as tl => TableLayout.toString(tl)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #TableLayout.t as tl => TableLayout.toString(tl)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -929,9 +929,9 @@ let textAlign = x =>
   Declaration(
     "textAlign",
     switch (x) {
-    | TextAlign.t as ta => TextAlign.toString(ta)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #TextAlign.t as ta => TextAlign.toString(ta)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -939,9 +939,9 @@ let textDecorationColor = x =>
   Declaration(
     "textDecorationColor",
     switch (x) {
-    | Color.t as co => Color.toString(co)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Color.t as co => Color.toString(co)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -949,9 +949,9 @@ let textDecorationLine = x =>
   Declaration(
     "textDecorationLine",
     switch (x) {
-    | TextDecorationLine.t as tdl => TextDecorationLine.toString(tdl)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #TextDecorationLine.t as tdl => TextDecorationLine.toString(tdl)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -959,9 +959,9 @@ let textDecorationStyle = x =>
   Declaration(
     "textDecorationStyle",
     switch (x) {
-    | TextDecorationStyle.t as tds => TextDecorationStyle.toString(tds)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #TextDecorationStyle.t as tds => TextDecorationStyle.toString(tds)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -969,10 +969,10 @@ let textIndent = x =>
   Declaration(
     "textIndent",
     switch (x) {
-    | Percentage.t as p => Percentage.toString(p)
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -980,9 +980,9 @@ let textOverflow = x =>
   Declaration(
     "textOverflow",
     switch (x) {
-    | TextOverflow.t as txo => TextOverflow.toString(txo)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #TextOverflow.t as txo => TextOverflow.toString(txo)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -990,9 +990,9 @@ let textTransform = x =>
   Declaration(
     "textTransform",
     switch (x) {
-    | TextTransform.t as tt => TextTransform.toString(tt)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #TextTransform.t as tt => TextTransform.toString(tt)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -1003,7 +1003,7 @@ let transform = x =>
     "transform",
     switch (x) {
     | `none => "none"
-    | Transform.t as t => Transform.toString(t)
+    | #Transform.t as t => Transform.toString(t)
     },
   );
 
@@ -1030,9 +1030,9 @@ let userSelect = x =>
   Declaration(
     "userSelect",
     switch (x) {
-    | UserSelect.t as us => UserSelect.toString(us)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #UserSelect.t as us => UserSelect.toString(us)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -1040,10 +1040,10 @@ let verticalAlign = x =>
   Declaration(
     "verticalAlign",
     switch (x) {
-    | VerticalAlign.t as v => VerticalAlign.toString(v)
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #VerticalAlign.t as v => VerticalAlign.toString(v)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -1051,9 +1051,9 @@ let visibility = x =>
   Declaration(
     "visibility",
     switch (x) {
-    | Visibility.t as v => Visibility.toString(v)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Visibility.t as v => Visibility.toString(v)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -1061,11 +1061,11 @@ let width = x =>
   Declaration(
     "width",
     switch (x) {
-    | Width.t as w => Width.toString(w)
-    | Percentage.t as p => Percentage.toString(p)
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Width.t as w => Width.toString(w)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -1073,9 +1073,9 @@ let whiteSpace = x =>
   Declaration(
     "whiteSpace",
     switch (x) {
-    | WhiteSpace.t as w => WhiteSpace.toString(w)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #WhiteSpace.t as w => WhiteSpace.toString(w)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -1083,9 +1083,9 @@ let wordBreak = x =>
   Declaration(
     "wordBreak",
     switch (x) {
-    | WordBreak.t as w => WordBreak.toString(w)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #WordBreak.t as w => WordBreak.toString(w)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -1093,11 +1093,11 @@ let wordSpacing = x =>
   Declaration(
     "wordSpacing",
     switch (x) {
-    | WordSpacing.t as w => WordSpacing.toString(w)
-    | Percentage.t as p => Percentage.toString(p)
-    | Length.t as l => Length.toString(l)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #WordSpacing.t as w => WordSpacing.toString(w)
+    | #Percentage.t as p => Percentage.toString(p)
+    | #Length.t as l => Length.toString(l)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -1208,8 +1208,8 @@ let initial = Cascading.initial;
 let inherit_ = Cascading.inherit_;
 let unset = Cascading.unset;
 
-let var = Types.Var.var;
-let varDefault = Types.Var.varDefault;
+let var = Var.var;
+let varDefault = Var.varDefault;
 
 // shared
 let auto = `auto;
@@ -1494,8 +1494,8 @@ let flex3 = (~grow, ~shrink, ~basis) =>
     ++ " "
     ++ (
       switch (basis) {
-      | FlexBasis.t as b => FlexBasis.toString(b)
-      | Length.t as l => Length.toString(l)
+      | #FlexBasis.t as b => FlexBasis.toString(b)
+      | #Length.t as l => Length.toString(l)
       }
     ),
   );
@@ -1503,8 +1503,8 @@ let flexBasis = x =>
   Declaration(
     "flexBasis",
     switch (x) {
-    | FlexBasis.t as b => FlexBasis.toString(b)
-    | Length.t as l => Length.toString(l)
+    | #FlexBasis.t as b => FlexBasis.toString(b)
+    | #Length.t as l => Length.toString(l)
     },
   );
 
@@ -1637,9 +1637,9 @@ let gridArea = s =>
   Declaration(
     "gridArea",
     switch (s) {
-    | GridArea.t as t => GridArea.toString(t)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #GridArea.t as t => GridArea.toString(t)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -1672,9 +1672,9 @@ let gridTemplateAreas = l =>
   Declaration(
     "gridTemplateAreas",
     switch (l) {
-    | GridTemplateAreas.t as t => GridTemplateAreas.toString(t)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #GridTemplateAreas.t as t => GridTemplateAreas.toString(t)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -1717,9 +1717,9 @@ let string_of_filter =
   | `saturate(v) => "saturate(" ++ Js.Float.toString(v) ++ "%)"
   | `sepia(v) => "sepia(" ++ Js.Float.toString(v) ++ "%)"
   | `none => "none"
-  | Url.t as u => Url.toString(u)
-  | Var.t as va => Var.toString(va)
-  | Cascading.t as c => Cascading.toString(c);
+  | #Url.t as u => Url.toString(u)
+  | #Var.t as va => Var.toString(va)
+  | #Cascading.t as c => Cascading.toString(c);
 
 let filter = x =>
   Declaration("filter", x->Belt.Array.map(string_of_filter)->join(" "));
@@ -1765,9 +1765,9 @@ let boxShadow = x =>
   Declaration(
     "boxShadow",
     switch (x) {
-    | Shadow.t as s => Shadow.toString(s)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Shadow.t as s => Shadow.toString(s)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -1776,9 +1776,9 @@ let boxShadows = x =>
 
 let string_of_borderstyle =
   fun
-  | BorderStyle.t as b => BorderStyle.toString(b)
-  | Var.t as va => Var.toString(va)
-  | Cascading.t as c => Cascading.toString(c);
+  | #BorderStyle.t as b => BorderStyle.toString(b)
+  | #Var.t as va => Var.toString(va)
+  | #Cascading.t as c => Cascading.toString(c);
 
 let border = (px, style, color) =>
   Declaration(
@@ -1842,9 +1842,9 @@ let background = x =>
   Declaration(
     "background",
     switch (x) {
-    | Color.t as c => Color.toString(c)
-    | Url.t as u => Url.toString(u)
-    | Gradient.t as g => Gradient.toString(g)
+    | #Color.t as c => Color.toString(c)
+    | #Url.t as u => Url.toString(u)
+    | #Gradient.t as g => Gradient.toString(g)
     | `none => "none"
     },
   );
@@ -1855,9 +1855,9 @@ let backgrounds = x =>
     x
     ->Belt.Array.map(item =>
         switch (item) {
-        | Color.t as c => Color.toString(c)
-        | Url.t as u => Url.toString(u)
-        | Gradient.t as g => Gradient.toString(g)
+        | #Color.t as c => Color.toString(c)
+        | #Url.t as u => Url.toString(u)
+        | #Gradient.t as g => Gradient.toString(g)
         | `none => "none"
         }
       )
@@ -1895,9 +1895,9 @@ let fontFace =
       "font-weight: "
       ++ (
         switch (w) {
-        | FontWeight.t as f => FontWeight.toString(f)
-        | Var.t as va => Var.toString(va)
-        | Cascading.t as c => Cascading.toString(c)
+        | #FontWeight.t as f => FontWeight.toString(f)
+        | #Var.t as va => Var.toString(va)
+        | #Cascading.t as c => Cascading.toString(c)
         }
       )
       ++ ";"
@@ -1927,7 +1927,7 @@ let textDecoration = x =>
     | `initial => "initial"
     | `inherit_ => "inherit"
     | `unset => "unset"
-    | Var.t as va => Var.toString(va)
+    | #Var.t as va => Var.toString(va)
     },
   );
 
@@ -1935,9 +1935,9 @@ let textShadow = x =>
   Declaration(
     "textShadow",
     switch (x) {
-    | Shadow.t as s => Shadow.toString(s)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #Shadow.t as s => Shadow.toString(s)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -1948,9 +1948,9 @@ let transformStyle = x =>
   Declaration(
     "transformStyle",
     switch (x) {
-    | TransformStyle.t as ts => TransformStyle.toString(ts)
-    | Var.t as va => Var.toString(va)
-    | Cascading.t as c => Cascading.toString(c)
+    | #TransformStyle.t as ts => TransformStyle.toString(ts)
+    | #Var.t as va => Var.toString(va)
+    | #Cascading.t as c => Cascading.toString(c)
     },
   );
 
@@ -2075,10 +2075,10 @@ module SVG = {
     Declaration(
       "fill",
       switch (x) {
-      | Types.SVG.Fill.t as f => Types.SVG.Fill.toString(f)
-      | Types.Color.t as c => Types.Color.toString(c)
-      | Types.Var.t as v => Types.Var.toString(v)
-      | Types.Url.t as u => Types.Url.toString(u)
+      | #SVG.Fill.t as f => SVG.Fill.toString(f)
+      | #Color.t as c => Color.toString(c)
+      | #Var.t as v => Var.toString(v)
+      | #Url.t as u => Url.toString(u)
       },
     );
   let fillOpacity = opacity => Declaration("fillOpacity", Js.Float.toString(opacity));
