@@ -87,7 +87,7 @@ module Length = {
     | `pc(float)
     | `pt(int)
     | `zero
-    | `calc([ | `add | `sub | `multiply | `divide], t, t)
+    | `calc([ | `add | `sub], t, t)
     | `percent(float)
   ];
 

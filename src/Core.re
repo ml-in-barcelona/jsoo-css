@@ -1413,8 +1413,8 @@ module Calc = {
   /* https://www.w3.org/TR/css3-values/#calc-notation */
   let (-) = (a, b) => `calc((`sub, a, b));
   let (+) = (a, b) => `calc((`add, a, b));
-  let ( * ) = (a, b) => `multiply((a, b));
-  let (/) = (a, b) => `divide((a, b));
+  /* let ( * ) = (a, b) => `multiply((a, b));
+     let (/) = (a, b) => `divide((a, b)); */
 };
 let size = (x, y) => `size((x, y));
 
