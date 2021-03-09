@@ -1406,16 +1406,15 @@ let nwseResize = Cursor.nwseResize;
 let zoomIn = Cursor.zoomIn;
 let zoomOut = Cursor.zoomOut;
 
-/********************************************************
- ********************************************************
- ********************************************************/
-
 let vw = x => `vw(x);
 let fr = x => `fr(x);
 
 module Calc = {
+  /* https://www.w3.org/TR/css3-values/#calc-notation */
   let (-) = (a, b) => `calc((`sub, a, b));
   let (+) = (a, b) => `calc((`add, a, b));
+  let ( * ) = (a, b) => `multiply((a, b));
+  let (/) = (a, b) => `divide((a, b));
 };
 let size = (x, y) => `size((x, y));
 
@@ -1925,6 +1924,7 @@ let backgroundSize = x =>
     },
   );
 
+/* TODO: Fix fontFace */
 let fontFace =
     (
       ~fontFamily as _,
