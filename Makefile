@@ -38,8 +38,6 @@ all:
 
 .PHONY: dev
 dev: ## Install development dependencies
-	opam pin add -y ocaml-lsp-server https://github.com/ocaml/ocaml-lsp.git
-	opam install -y ocaml-lsp-server
 	cd demo/asset && npm install
 	opam install --deps-only --with-test --with-doc -y .
 

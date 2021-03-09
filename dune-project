@@ -22,5 +22,6 @@
   js_of_ocaml-ppx
   (alcotest :with-test)
   (odoc :with-doc)
+  ocaml-lsp-server
  )
 )
