@@ -147,4 +147,4 @@ let white = Color.hex("FFFFFF");
 let whitesmoke = Color.hex("F5F5F5");
 let yellow = Color.hex("FFFF00");
 let yellowgreen = Color.hex("9ACD32");
-let transparent = transparent;
+let transparent = `transparent;
