@@ -1,5 +1,3 @@
-open Js_of_ocaml;
-
 module Js = {
   module String = {
     let startsWith = (affix, str) => {
@@ -1251,10 +1249,7 @@ module GridTemplateAreas = {
     | `none => "none"
     | `areas(listOfAreas) =>
       listOfAreas
-      |> List.fold(
-           ~f=(carry, elem) => carry ++ "'" ++ elem ++ "' ",
-           ~init="",
-         );
+      |> List.fold_left((carry, elem) => carry ++ "'" ++ elem ++ "' ", "");
 };
 
 module GridArea = {
@@ -1517,10 +1512,10 @@ module Gradient = {
 
   let string_of_stops = stops =>
     stops
-    |> List.map(~f=((l, c)) =>
+    |> List.map(((l, c)) =>
          string_of_color(c) ++ " " ++ Length.toString(l)
        )
-    |> String.concat(~sep=", ");
+    |> String.concat(", ");
 
   let toString =
     fun

@@ -1,4 +1,9 @@
 open Types;
+open Js_of_ocaml;
+
+/* Js_of_ocaml.URL clashes with Types.Url,
+   here we specify we want the Types.Url */
+module Url = Types.Url;
 
 type rule =
   | Declaration(string, string)
@@ -8,46 +13,60 @@ type rule =
 
 let rec ruleToDict = (dict, rule) => {
   switch (rule) {
-  | Declaration(name, value) when name == "content" =>
-    dict->Js.Dict.set(name, Js.Json.string(value == "" ? "\"\"" : value))
-  | Declaration(name, value) => dict->Js.Dict.set(name, Js.Json.string(value))
-  | Selector(name, ruleset) => dict->Js.Dict.set(name, toJson(ruleset))
+  | Declaration(name, value) => Js.Unsafe.set(name, Js.string(value), dict)
+  | Selector(name, ruleset) => Js.Unsafe.set(name, toJson(ruleset), dict)
   | PseudoClass(name, ruleset) =>
-    dict->Js.Dict.set(":" ++ name, toJson(ruleset))
+    Js.Unsafe.set(":" ++ name, toJson(ruleset), dict)
   | PseudoClassParam(name, param, ruleset) =>
-    dict->Js.Dict.set(":" ++ name ++ "(" ++ param ++ ")", toJson(ruleset))
+    Js.Unsafe.set(":" ++ name ++ "(" ++ param ++ ")", toJson(ruleset), dict)
   };
   dict;
 }
 
 and toJson = rules =>
-  rules->Belt.Array.reduce(Js.Dict.empty(), ruleToDict)->Js.Json.object_;
+  rules |> Array.fold_left(ruleToDict, Js.Unsafe.obj([||])) |> Js.Unsafe.obj;
 
-module Make = (CssImplementation: Css_Core.CssImplementationIntf) => {
-  let merge = (. stylenames) => CssImplementation.mergeStyles(. stylenames);
+module type Interface = {
+  let mergeStyles: (. array(string)) => string;
+  let injectRule: (. Js.json) => unit;
+  let injectRaw: (. string) => unit;
+  let make: (. Js.json) => string;
+  let makeKeyFrames: (. Js.t(Js.json)) => string;
+};
 
-  let insertRule = (. rule) => CssImplementation.injectRaw(. rule);
+module Make = (Implementation: Interface) => {
+  let merge = (. stylenames) => Implementation.mergeStyles(. stylenames);
 
-  let style = (. rules) => CssImplementation.make(. rules->toJson);
+  let insertRule = (. rule) => Implementation.injectRaw(. rule);
+
+  let style = (. rules) => Implementation.make(. toJson(rules));
 
   let global =
     (. selector, rules) =>
-      CssImplementation.injectRule(.
-        [|(selector, toJson(rules))|]->Js.Dict.fromArray->Js.Json.object_,
+      Implementation.injectRule(.
+        [|(selector, toJson(rules))|] |> Js.Unsafe.obj,
       );
 
   let keyframes =
     (. frames) =>
-      CssImplementation.makeKeyFrames(.
-        frames->Belt.Array.reduceU(
-          Js.Dict.empty(),
-          (. dict, (stop, rules)) => {
-            Js.Dict.set(dict, Int.to_string(stop) ++ "%", toJson(rules));
-            dict;
-          },
-        ),
+      Implementation.makeKeyFrames(.
+        frames
+        |> Array.fold_left(
+             (. dict, (stop, rules)) => {
+               Js.Unsafe.set(
+                 dict,
+                 Int.to_string(stop) ++ "%",
+                 toJson(rules),
+               );
+               dict;
+             },
+             Js.Unsafe.obj([||]),
+           ),
       );
 };
+
+let concatArr = (f, separator, arr) =>
+  arr |> Array.map(f) |> Array.to_list |> String.concat(separator);
 
 module Converter = {
   let string_of_time = t => Int.to_string(t) ++ "ms";
@@ -165,13 +184,17 @@ let animationDelay = x => Declaration("animationDelay", string_of_time(x));
 let animationDirection = x =>
   Declaration("animationDirection", AnimationDirection.toString(x));
 
-let animationDuration = x => Declaration("animationDuration", string_of_time(x));
+let animationDuration = x =>
+  Declaration("animationDuration", string_of_time(x));
 
 let animationFillMode = x =>
   Declaration("animationFillMode", AnimationFillMode.toString(x));
 
 let animationIterationCount = x =>
-  Declaration("animationIterationCount", AnimationIterationCount.toString(x));
+  Declaration(
+    "animationIterationCount",
+    AnimationIterationCount.toString(x),
+  );
 
 let animationPlayState = x =>
   Declaration("animationPlayState", AnimationPlayState.toString(x));
@@ -192,7 +215,7 @@ let backfaceVisibility = x =>
 let backdropFilter = x =>
   Declaration(
     "backdropFilter",
-    x->Belt.Array.map(BackdropFilter.toString)->String.concat(", "),
+    x |> concatArr(BackdropFilter.toString, ", "),
   );
 
 let backgroundAttachment = x =>
@@ -205,7 +228,8 @@ let backgroundAttachment = x =>
     },
   );
 
-let backgroundColor = x => Declaration("backgroundColor", string_of_color(x));
+let backgroundColor = x =>
+  Declaration("backgroundColor", string_of_color(x));
 
 let backgroundClip = x =>
   Declaration(
@@ -264,7 +288,7 @@ let backgroundPosition = x =>
 let backgroundPositions = bp =>
   Declaration(
     "backgroundPosition",
-    bp->Belt.Array.map(string_of_backgroundposition)->join(", "),
+    bp |> concatArr(string_of_backgroundposition, ", "),
   );
 
 let backgroundPosition4 = (~x, ~offsetX, ~y, ~offsetY) =>
@@ -291,7 +315,8 @@ let backgroundRepeat = x =>
     },
   );
 
-let borderBottomColor = x => Declaration("borderBottomColor", string_of_color(x));
+let borderBottomColor = x =>
+  Declaration("borderBottomColor", string_of_color(x));
 
 let borderBottomLeftRadius = x =>
   Declaration("borderBottomLeftRadius", Length.toString(x));
@@ -299,7 +324,8 @@ let borderBottomLeftRadius = x =>
 let borderBottomRightRadius = x =>
   Declaration("borderBottomRightRadius", Length.toString(x));
 
-let borderBottomWidth = x => Declaration("borderBottomWidth", Length.toString(x));
+let borderBottomWidth = x =>
+  Declaration("borderBottomWidth", Length.toString(x));
 
 let borderCollapse = x =>
   Declaration(
@@ -313,21 +339,26 @@ let borderCollapse = x =>
 
 let borderColor = x => Declaration("borderColor", string_of_color(x));
 
-let borderLeftColor = x => Declaration("borderLeftColor", string_of_color(x));
+let borderLeftColor = x =>
+  Declaration("borderLeftColor", string_of_color(x));
 
-let borderLeftWidth = x => Declaration("borderLeftWidth", Length.toString(x));
+let borderLeftWidth = x =>
+  Declaration("borderLeftWidth", Length.toString(x));
 
 let borderSpacing = x => Declaration("borderSpacing", Length.toString(x));
 
 let borderRadius = x => Declaration("borderRadius", Length.toString(x));
 
-let borderRightColor = x => Declaration("borderRightColor", string_of_color(x));
+let borderRightColor = x =>
+  Declaration("borderRightColor", string_of_color(x));
 
-let borderRightWidth = x => Declaration("borderRightWidth", Length.toString(x));
+let borderRightWidth = x =>
+  Declaration("borderRightWidth", Length.toString(x));
 
 let borderTopColor = x => Declaration("borderTopColor", string_of_color(x));
 
-let borderTopLeftRadius = x => Declaration("borderTopLeftRadius", Length.toString(x));
+let borderTopLeftRadius = x =>
+  Declaration("borderTopLeftRadius", Length.toString(x));
 
 let borderTopRightRadius = x =>
   Declaration("borderTopRightRadius", Length.toString(x));
@@ -386,23 +417,24 @@ let columnGap = x => Declaration("columnGap", string_of_column_gap(x));
 
 let contentRule = x => Declaration("content", string_of_content(x));
 let contentRules = xs =>
-  Declaration("content", xs->Belt.Array.map(string_of_content)->join(" "));
+  Declaration("content", xs |> concatArr(string_of_content, " "));
 
 let counterIncrement = x =>
   Declaration("counterIncrement", string_of_counter_increment(x));
 let countersIncrement = xs =>
   Declaration(
     "counterIncrement",
-    xs->Belt.Array.map(string_of_counter_increment)->join(" "),
+    xs |> concatArr(string_of_counter_increment, " "),
   );
 
-let counterReset = x => Declaration("counterReset", string_of_counter_reset(x));
+let counterReset = x =>
+  Declaration("counterReset", string_of_counter_reset(x));
 let countersReset = xs =>
-  Declaration("counterReset", xs->Belt.Array.map(string_of_counter_reset)->join(" "));
+  Declaration("counterReset", xs |> concatArr(string_of_counter_reset, " "));
 
 let counterSet = x => Declaration("counterSet", string_of_counter_set(x));
 let countersSet = xs =>
-  Declaration("counterSet", xs->Belt.Array.map(string_of_counter_set)->join(" "));
+  Declaration("counterSet", xs |> concatArr(string_of_counter_set, " "));
 
 let cursor = x => Declaration("cursor", Cursor.toString(x));
 
@@ -436,7 +468,7 @@ let flex = x =>
     "flex",
     switch (x) {
     | #Flex.t as f => Flex.toString(f)
-    | `num(n) => Js.Float.toString(n)
+    | `num(n) => Float.toString(n)
     },
   );
 
@@ -450,9 +482,9 @@ let flexDirection = x =>
     },
   );
 
-let flexGrow = x => Declaration("flexGrow", Js.Float.toString(x));
+let flexGrow = x => Declaration("flexGrow", Float.toString(x));
 
-let flexShrink = x => Declaration("flexShrink", Js.Float.toString(x));
+let flexShrink = x => Declaration("flexShrink", Float.toString(x));
 
 let flexWrap = x =>
   Declaration(
@@ -485,7 +517,7 @@ let fontFamily = x =>
   );
 
 let fontFamilies = xs =>
-  Declaration("fontFamily", xs->Belt.Array.map(FontFamilyName.toString)->join(", "));
+  Declaration("fontFamily", xs |> concatArr(FontFamilyName.toString, ", "));
 
 let fontSize = x =>
   Declaration(
@@ -538,16 +570,23 @@ let gridAutoFlow = x =>
   );
 
 let gridColumn = (start, end') =>
-  Declaration("gridColumn", Int.to_string(start) ++ " / " ++ Int.to_string(end'));
+  Declaration(
+    "gridColumn",
+    Int.to_string(start) ++ " / " ++ Int.to_string(end'),
+  );
 
-let gridColumnGap = x => Declaration("gridColumnGap", string_of_column_gap(x));
+let gridColumnGap = x =>
+  Declaration("gridColumnGap", string_of_column_gap(x));
 
 let gridColumnStart = n => Declaration("gridColumnStart", Int.to_string(n));
 
 let gridColumnEnd = n => Declaration("gridColumnEnd", Int.to_string(n));
 
 let gridRow = (start, end') =>
-  Declaration("gridRow", Int.to_string(start) ++ " / " ++ Int.to_string(end'));
+  Declaration(
+    "gridRow",
+    Int.to_string(start) ++ " / " ++ Int.to_string(end'),
+  );
 
 let gridGap = x =>
   Declaration(
@@ -780,7 +819,7 @@ let objectFit = x =>
 let objectPosition = x =>
   Declaration("objectPosition", string_of_backgroundposition(x));
 
-let opacity = x => Declaration("opacity", Js.Float.toString(x));
+let opacity = x => Declaration("opacity", Float.toString(x));
 
 let outline = (size, style, color) =>
   Declaration(
@@ -793,7 +832,8 @@ let outline = (size, style, color) =>
   );
 let outlineColor = x => Declaration("outlineColor", string_of_color(x));
 let outlineOffset = x => Declaration("outlineOffset", Length.toString(x));
-let outlineStyle = x => Declaration("outlineStyle", OutlineStyle.toString(x));
+let outlineStyle = x =>
+  Declaration("outlineStyle", OutlineStyle.toString(x));
 let outlineWidth = x => Declaration("outlineWidth", Length.toString(x));
 
 let overflow = x => Declaration("overflow", Overflow.toString(x));
@@ -1008,10 +1048,13 @@ let transform = x =>
   );
 
 let transforms = x =>
-  Declaration("transform", x->Belt.Array.map(Transform.toString)->join(" "));
+  Declaration("transform", x |> concatArr(Transform.toString, " "));
 
 let transformOrigin = (x, y) =>
-  Declaration("transformOrigin", Length.toString(x) ++ " " ++ Length.toString(y));
+  Declaration(
+    "transformOrigin",
+    Length.toString(x) ++ " " ++ Length.toString(y),
+  );
 
 let transformOrigin3d = (x, y, z) =>
   Declaration(
@@ -1488,9 +1531,9 @@ let square = `square;
 let flex3 = (~grow, ~shrink, ~basis) =>
   Declaration(
     "flex",
-    Js.Float.toString(grow)
+    Float.toString(grow)
     ++ " "
-    ++ Js.Float.toString(shrink)
+    ++ Float.toString(shrink)
     ++ " "
     ++ (
       switch (basis) {
@@ -1517,23 +1560,23 @@ let string_of_minmax =
     "calc(" ++ Length.toString(a) ++ " + " ++ Length.toString(b) ++ ")"
   | `calc(`sub, a, b) =>
     "calc(" ++ Length.toString(a) ++ " - " ++ Length.toString(b) ++ ")"
-  | `ch(x) => Js.Float.toString(x) ++ "ch"
-  | `cm(x) => Js.Float.toString(x) ++ "cm"
-  | `em(x) => Js.Float.toString(x) ++ "em"
-  | `ex(x) => Js.Float.toString(x) ++ "ex"
-  | `mm(x) => Js.Float.toString(x) ++ "mm"
-  | `percent(x) => Js.Float.toString(x) ++ "%"
+  | `ch(x) => Float.toString(x) ++ "ch"
+  | `cm(x) => Float.toString(x) ++ "cm"
+  | `em(x) => Float.toString(x) ++ "em"
+  | `ex(x) => Float.toString(x) ++ "ex"
+  | `mm(x) => Float.toString(x) ++ "mm"
+  | `percent(x) => Float.toString(x) ++ "%"
   | `pt(x) => Int.to_string(x) ++ "pt"
   | `px(x) => Int.to_string(x) ++ "px"
-  | `pxFloat(x) => Js.Float.toString(x) ++ "px"
-  | `rem(x) => Js.Float.toString(x) ++ "rem"
-  | `vh(x) => Js.Float.toString(x) ++ "vh"
-  | `vmax(x) => Js.Float.toString(x) ++ "vmax"
-  | `vmin(x) => Js.Float.toString(x) ++ "vmin"
-  | `vw(x) => Js.Float.toString(x) ++ "vw"
-  | `fr(x) => Js.Float.toString(x) ++ "fr"
-  | `inch(x) => Js.Float.toString(x) ++ "in"
-  | `pc(x) => Js.Float.toString(x) ++ "pc"
+  | `pxFloat(x) => Float.toString(x) ++ "px"
+  | `rem(x) => Float.toString(x) ++ "rem"
+  | `vh(x) => Float.toString(x) ++ "vh"
+  | `vmax(x) => Float.toString(x) ++ "vmax"
+  | `vmin(x) => Float.toString(x) ++ "vmin"
+  | `vw(x) => Float.toString(x) ++ "vw"
+  | `fr(x) => Float.toString(x) ++ "fr"
+  | `inch(x) => Float.toString(x) ++ "in"
+  | `pc(x) => Float.toString(x) ++ "pc"
   | `zero => "0"
   | `minContent => "min-content"
   | `maxContent => "max-content";
@@ -1546,23 +1589,23 @@ let string_of_dimension =
     "calc(" ++ Length.toString(a) ++ " + " ++ Length.toString(b) ++ ")"
   | `calc(`sub, a, b) =>
     "calc(" ++ Length.toString(a) ++ " - " ++ Length.toString(b) ++ ")"
-  | `ch(x) => Js.Float.toString(x) ++ "ch"
-  | `cm(x) => Js.Float.toString(x) ++ "cm"
-  | `em(x) => Js.Float.toString(x) ++ "em"
-  | `ex(x) => Js.Float.toString(x) ++ "ex"
-  | `mm(x) => Js.Float.toString(x) ++ "mm"
-  | `percent(x) => Js.Float.toString(x) ++ "%"
+  | `ch(x) => Float.toString(x) ++ "ch"
+  | `cm(x) => Float.toString(x) ++ "cm"
+  | `em(x) => Float.toString(x) ++ "em"
+  | `ex(x) => Float.toString(x) ++ "ex"
+  | `mm(x) => Float.toString(x) ++ "mm"
+  | `percent(x) => Float.toString(x) ++ "%"
   | `pt(x) => Int.to_string(x) ++ "pt"
   | `px(x) => Int.to_string(x) ++ "px"
-  | `pxFloat(x) => Js.Float.toString(x) ++ "px"
-  | `rem(x) => Js.Float.toString(x) ++ "rem"
-  | `vh(x) => Js.Float.toString(x) ++ "vh"
-  | `vmax(x) => Js.Float.toString(x) ++ "vmax"
-  | `vmin(x) => Js.Float.toString(x) ++ "vmin"
-  | `vw(x) => Js.Float.toString(x) ++ "vw"
-  | `fr(x) => Js.Float.toString(x) ++ "fr"
-  | `inch(x) => Js.Float.toString(x) ++ "in"
-  | `pc(x) => Js.Float.toString(x) ++ "pc"
+  | `pxFloat(x) => Float.toString(x) ++ "px"
+  | `rem(x) => Float.toString(x) ++ "rem"
+  | `vh(x) => Float.toString(x) ++ "vh"
+  | `vmax(x) => Float.toString(x) ++ "vmax"
+  | `vmin(x) => Float.toString(x) ++ "vmin"
+  | `vw(x) => Float.toString(x) ++ "vw"
+  | `fr(x) => Float.toString(x) ++ "fr"
+  | `inch(x) => Float.toString(x) ++ "in"
+  | `pc(x) => Float.toString(x) ++ "pc"
   | `zero => "0"
   | `fitContent => "fit-content"
   | `minContent => "min-content"
@@ -1589,23 +1632,23 @@ let gridLengthToJs =
     "calc(" ++ Length.toString(a) ++ " + " ++ Length.toString(b) ++ ")"
   | `calc(`sub, a, b) =>
     "calc(" ++ Length.toString(a) ++ " - " ++ Length.toString(b) ++ ")"
-  | `ch(x) => Js.Float.toString(x) ++ "ch"
-  | `cm(x) => Js.Float.toString(x) ++ "cm"
-  | `em(x) => Js.Float.toString(x) ++ "em"
-  | `ex(x) => Js.Float.toString(x) ++ "ex"
-  | `mm(x) => Js.Float.toString(x) ++ "mm"
-  | `percent(x) => Js.Float.toString(x) ++ "%"
+  | `ch(x) => Float.toString(x) ++ "ch"
+  | `cm(x) => Float.toString(x) ++ "cm"
+  | `em(x) => Float.toString(x) ++ "em"
+  | `ex(x) => Float.toString(x) ++ "ex"
+  | `mm(x) => Float.toString(x) ++ "mm"
+  | `percent(x) => Float.toString(x) ++ "%"
   | `pt(x) => Int.to_string(x) ++ "pt"
   | `px(x) => Int.to_string(x) ++ "px"
-  | `pxFloat(x) => Js.Float.toString(x) ++ "px"
-  | `rem(x) => Js.Float.toString(x) ++ "rem"
-  | `vh(x) => Js.Float.toString(x) ++ "vh"
-  | `inch(x) => Js.Float.toString(x) ++ "in"
-  | `pc(x) => Js.Float.toString(x) ++ "pc"
-  | `vmax(x) => Js.Float.toString(x) ++ "vmax"
-  | `vmin(x) => Js.Float.toString(x) ++ "vmin"
-  | `vw(x) => Js.Float.toString(x) ++ "vw"
-  | `fr(x) => Js.Float.toString(x) ++ "fr"
+  | `pxFloat(x) => Float.toString(x) ++ "px"
+  | `rem(x) => Float.toString(x) ++ "rem"
+  | `vh(x) => Float.toString(x) ++ "vh"
+  | `inch(x) => Float.toString(x) ++ "in"
+  | `pc(x) => Float.toString(x) ++ "pc"
+  | `vmax(x) => Float.toString(x) ++ "vmax"
+  | `vmin(x) => Float.toString(x) ++ "vmin"
+  | `vw(x) => Float.toString(x) ++ "vw"
+  | `fr(x) => Float.toString(x) ++ "fr"
   | `zero => "0"
   | `minContent => "min-content"
   | `maxContent => "max-content"
@@ -1619,7 +1662,7 @@ let gridLengthToJs =
     "minmax(" ++ string_of_minmax(a) ++ "," ++ string_of_minmax(b) ++ ")";
 
 let string_of_dimensions = dimensions =>
-  dimensions->Belt.Array.map(gridLengthToJs)->join(" ");
+  dimensions |> concatArr(gridLengthToJs, " ");
 
 let gridTemplateColumns = dimensions =>
   Declaration("gridTemplateColumns", string_of_dimensions(dimensions));
@@ -1644,7 +1687,10 @@ let gridArea = s =>
   );
 
 let gridArea2 = (s, s2) =>
-  Declaration("gridArea", GridArea.toString(s) ++ " / " ++ GridArea.toString(s2));
+  Declaration(
+    "gridArea",
+    GridArea.toString(s) ++ " / " ++ GridArea.toString(s2),
+  );
 
 let gridArea3 = (s, s2, s3) =>
   Declaration(
@@ -1698,8 +1744,8 @@ type filter = [
 let string_of_filter =
   fun
   | `blur(v) => "blur(" ++ Length.toString(v) ++ ")"
-  | `brightness(v) => "brightness(" ++ Js.Float.toString(v) ++ "%)"
-  | `contrast(v) => "contrast(" ++ Js.Float.toString(v) ++ "%)"
+  | `brightness(v) => "brightness(" ++ Float.toString(v) ++ "%)"
+  | `contrast(v) => "contrast(" ++ Float.toString(v) ++ "%)"
   | `dropShadow(a, b, c, d) =>
     "drop-shadow("
     ++ Length.toString(a)
@@ -1710,19 +1756,19 @@ let string_of_filter =
     ++ " "
     ++ Color.toString(d)
     ++ ")"
-  | `grayscale(v) => "grayscale(" ++ Js.Float.toString(v) ++ "%)"
+  | `grayscale(v) => "grayscale(" ++ Float.toString(v) ++ "%)"
   | `hueRotate(v) => "hue-rotate(" ++ Angle.toString(v) ++ ")"
-  | `invert(v) => "invert(" ++ Js.Float.toString(v) ++ "%)"
-  | `opacity(v) => "opacity(" ++ Js.Float.toString(v) ++ "%)"
-  | `saturate(v) => "saturate(" ++ Js.Float.toString(v) ++ "%)"
-  | `sepia(v) => "sepia(" ++ Js.Float.toString(v) ++ "%)"
+  | `invert(v) => "invert(" ++ Float.toString(v) ++ "%)"
+  | `opacity(v) => "opacity(" ++ Float.toString(v) ++ "%)"
+  | `saturate(v) => "saturate(" ++ Float.toString(v) ++ "%)"
+  | `sepia(v) => "sepia(" ++ Float.toString(v) ++ "%)"
   | `none => "none"
   | #Url.t as u => Url.toString(u)
   | #Var.t as va => Var.toString(va)
   | #Cascading.t as c => Cascading.toString(c);
 
 let filter = x =>
-  Declaration("filter", x->Belt.Array.map(string_of_filter)->join(" "));
+  Declaration("filter", x |> concatArr(string_of_filter, " "));
 
 module Shadow = {
   type value('a) = string;
@@ -1772,7 +1818,7 @@ let boxShadow = x =>
   );
 
 let boxShadows = x =>
-  Declaration("boxShadow", x->Belt.Array.map(Shadow.toString)->join(", "));
+  Declaration("boxShadow", x |> concatArr(Shadow.toString, ", "));
 
 let string_of_borderstyle =
   fun
@@ -1800,7 +1846,8 @@ let borderLeft = (px, style, color) =>
     ++ " "
     ++ string_of_color(color),
   );
-let borderLeftStyle = x => Declaration("borderLeftStyle", string_of_borderstyle(x));
+let borderLeftStyle = x =>
+  Declaration("borderLeftStyle", string_of_borderstyle(x));
 
 let borderRight = (px, style, color) =>
   Declaration(
@@ -1812,7 +1859,8 @@ let borderRight = (px, style, color) =>
     ++ string_of_color(color),
   );
 
-let borderRightStyle = x => Declaration("borderRightStyle", string_of_borderstyle(x));
+let borderRightStyle = x =>
+  Declaration("borderRightStyle", string_of_borderstyle(x));
 let borderTop = (px, style, color) =>
   Declaration(
     "borderTop",
@@ -1823,7 +1871,8 @@ let borderTop = (px, style, color) =>
     ++ string_of_color(color),
   );
 
-let borderTopStyle = x => Declaration("borderTopStyle", string_of_borderstyle(x));
+let borderTopStyle = x =>
+  Declaration("borderTopStyle", string_of_borderstyle(x));
 
 let borderBottom = (px, style, color) =>
   Declaration(
@@ -1853,15 +1902,16 @@ let backgrounds = x =>
   Declaration(
     "background",
     x
-    ->Belt.Array.map(item =>
-        switch (item) {
-        | #Color.t as c => Color.toString(c)
-        | #Url.t as u => Url.toString(u)
-        | #Gradient.t as g => Gradient.toString(g)
-        | `none => "none"
-        }
-      )
-    ->join(", "),
+    |> concatArr(
+         item =>
+           switch (item) {
+           | #Color.t as c => Color.toString(c)
+           | #Url.t as u => Url.toString(u)
+           | #Gradient.t as g => Gradient.toString(g)
+           | `none => "none"
+           },
+         ", ",
+       ),
   );
 
 let backgroundSize = x =>
@@ -1876,22 +1926,31 @@ let backgroundSize = x =>
   );
 
 let fontFace =
-    (~fontFamily, ~src, ~fontStyle=?, ~fontWeight=?, ~fontDisplay=?, ()) => {
-  let fontStyle =
-    Js.Option.map((. value) => FontStyle.toString(value), fontStyle);
-  let src =
-    src
-    ->Belt.Array.map(
-        fun
-        | `localUrl(value) => {j|local("$(value)")|j}
-        | `url(value) => {j|url("$(value)")|j},
-      )
-    ->join(", ");
+    (
+      ~fontFamily as _,
+      ~src,
+      ~fontStyle as _=?,
+      ~fontWeight=?,
+      ~fontDisplay=?,
+      (),
+    ) => {
+  let _fontStyle = "font-style: " ++ "normal" ++ ";";
+  /* let fontStyle =
+     fontStyle
+     |> Option.map(FontStyle.toString)
+     |> Option.get("", s => "font-style: " ++ s ++ ";"); */
 
-  let fontStyle =
-    Belt.Option.mapWithDefault(fontStyle, "", s => "font-style: " ++ s ++ ";");
-  let fontWeight =
-    Belt.Option.mapWithDefault(fontWeight, "", w =>
+  let _src =
+    src
+    |> concatArr(
+         fun
+         | `localUrl(value) => "local(" ++ value ++ ")"
+         | `url(value) => "url(" ++ value ++ ")",
+         ", ",
+       );
+
+  let _fontWeight =
+    Option.get(fontWeight, "", w =>
       "font-weight: "
       ++ (
         switch (w) {
@@ -1902,8 +1961,8 @@ let fontFace =
       )
       ++ ";"
     );
-  let fontDisplay =
-    Belt.Option.mapWithDefault(fontDisplay, "", f =>
+  let _fontDisplay =
+    Option.get(fontDisplay, "", f =>
       "font-display: " ++ FontDisplay.toString(f) ++ ";"
     );
 
@@ -1942,7 +2001,7 @@ let textShadow = x =>
   );
 
 let textShadows = x =>
-  Declaration("textShadow", x->Belt.Array.map(Shadow.toString)->join(", "));
+  Declaration("textShadow", x |> concatArr(Shadow.toString, ", "));
 
 let transformStyle = x =>
   Declaration(
@@ -1979,17 +2038,18 @@ module Transition = {
 let transitionValue = x => Declaration("transition", Transition.toString(x));
 
 let transitionList = x =>
-  Declaration("transition", x->Belt.Array.map(Transition.toString)->join(", "));
+  Declaration("transition", x |> concatArr(Transition.toString, ", "));
 let transitions = transitionList;
 
 let transition = (~duration=?, ~delay=?, ~timingFunction=?, property) =>
   transitionValue(
-    Transition.shorthanDeclaration(~duration?, ~delay?, ~timingFunction?, property),
+    Transition.shorthand(~duration?, ~delay?, ~timingFunction?, property),
   );
 
 let transitionDelay = i => Declaration("transitionDelay", string_of_time(i));
 
-let transitionDuration = i => Declaration("transitionDuration", string_of_time(i));
+let transitionDuration = i =>
+  Declaration("transitionDuration", string_of_time(i));
 
 let transitionTimingFunction = x =>
   Declaration("transitionTimingFunction", TimingFunction.toString(x));
@@ -2050,7 +2110,7 @@ let animation =
       name,
     ) =>
   animationValue(
-    Animation.shorthanDeclaration(
+    Animation.shorthand(
       ~duration?,
       ~delay?,
       ~direction?,
@@ -2063,7 +2123,7 @@ let animation =
   );
 
 let animations = x =>
-  Declaration("animation", x->Belt.Array.map(Animation.toString)->join(", "));
+  Declaration("animation", x |> concatArr(Animation.toString, ", "));
 
 let animationName = x => Declaration("animationName", x);
 
@@ -2081,7 +2141,8 @@ module SVG = {
       | #Url.t as u => Url.toString(u)
       },
     );
-  let fillOpacity = opacity => Declaration("fillOpacity", Js.Float.toString(opacity));
+  let fillOpacity = opacity =>
+    Declaration("fillOpacity", Float.toString(opacity));
   let fillRule = x =>
     Declaration(
       "fillRule",
@@ -2096,13 +2157,14 @@ module SVG = {
       "strokeDasharray",
       switch (x) {
       | `none => "none"
-      | `dasharray(a) => a->Belt.Array.map(string_of_dasharray)->join(" ")
+      | `dasharray(a) => a |> concatArr(string_of_dasharray, " ")
       },
     );
   let strokeWidth = x => Declaration("strokeWidth", Length.toString(x));
   let strokeOpacity = opacity =>
-    Declaration("strokeOpacity", Js.Float.toString(opacity));
-  let strokeMiterlimit = x => Declaration("strokeMiterlimit", Js.Float.toString(x));
+    Declaration("strokeOpacity", Float.toString(opacity));
+  let strokeMiterlimit = x =>
+    Declaration("strokeMiterlimit", Float.toString(x));
   let strokeLinecap = x =>
     Declaration(
       "strokeLinecap",
@@ -2123,5 +2185,5 @@ module SVG = {
       },
     );
   let stopColor = x => Declaration("stopColor", string_of_color(x));
-  let stopOpacity = x => Declaration("stopOpacity", Js.Float.toString(x));
+  let stopOpacity = x => Declaration("stopOpacity", Float.toString(x));
 };
