@@ -17,7 +17,7 @@
  (depends
   (ocaml (>= 4.08.0))
   (dune (>= 2.0))
-  reason
+  reason (>= 3.7.0)
   js_of_ocaml
   js_of_ocaml-ppx
   (alcotest :with-test)
