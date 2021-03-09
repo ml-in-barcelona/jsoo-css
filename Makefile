@@ -55,9 +55,10 @@ install: all ## Install the packages on the system
 start: all ## Serve the application with a local HTTP server
 	cd demo/asset && npm start
 
+# opam exec -- dune build --root . @test/runtest -f
 .PHONY: test
 test: ## Run the unit tests
-	opam exec -- dune build --root . @test/runtest -f
+	@echo "There's no tests yet :/"
 
 .PHONY: clean
 clean: ## Clean build artifacts and other generated files

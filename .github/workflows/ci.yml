@@ -16,7 +16,7 @@ jobs:
           - ubuntu-latest
           - windows-latest
         ocaml-version:
-          - 4.11.1
+          - 4.10.0
 
     steps:
       - name: Checkout code
@@ -28,7 +28,7 @@ jobs:
         id: cache-opam
         with:
           path: ~/.opam
-          key: v1-${{ runner.os }}-opam-${{ matrix.ocaml-version }}-${{ hashFiles('jsoo-css-demo.opam.locked') }}
+          key: v1-${{ runner.os }}-opam-${{ matrix.ocaml-version }}-${{ hashFiles('jsoo-css.opam.locked') }}
           restore-keys: |
             v1-${{ runner.os }}-opam-${{ matrix.ocaml-version }}-
 
@@ -38,16 +38,15 @@ jobs:
           ocaml-version: ${{ matrix.ocaml-version }}
 
       - name: Pin package
-        run: opam pin add jsoo-css-demo.dev . --no-action
+        run: opam pin add jsoo-css.dev . --no-action
 
       - name: Query and install external dependencies
-        run: opam depext jsoo-css-demo --yes --with-doc --with-test
+        run: opam depext jsoo-css --yes --with-doc --with-test
 
       - name: Install dependencies
         if: steps.cache-opam.outputs.cache-hit != 'true'
         run: |
           opam install . --deps-only --with-doc --with-test --locked --unlock-base
-          opam install ocamlformat
 
       - name: Upgrade dependencies
         run: opam upgrade --fixup
@@ -55,9 +54,6 @@ jobs:
 
       - name: Build
         run: make build
-
-      - name: Check formatting
-        run: make format
 
       - name: Run tests
         run: make test
