@@ -39,7 +39,7 @@ module Make = (Implementation: Interface) => {
 
   let insertRule = (. rule) => Implementation.injectRaw(. rule);
 
-  let style = (. rules) => Implementation.make(. toJson(rules));
+  let make = (. rules) => Implementation.make(. toJson(rules));
 
   let global =
     (. selector, rules) =>
