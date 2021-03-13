@@ -20,6 +20,9 @@
   (reason (>= 3.7.0))
   js_of_ocaml
   js_of_ocaml-ppx
+  js_of_ocaml-lwt
+  gen_js_api
+  lwt
   (alcotest :with-test)
   (odoc :with-doc)
   ocaml-lsp-server

@@ -1182,6 +1182,7 @@ let lastOfType = pseudoClass("last-of-type");
 //let left = selector(":left");
 let link = pseudoClass("link");
 let not_ = (selector, rules) => PseudoClassParam("not", selector, rules);
+
 module Nth = {
   type t = [ | `odd | `even | `n(int) | `adDeclaration(int, int)];
   let toString =

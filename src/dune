@@ -1,9 +1,12 @@
 (library
- (name jsoo_css)
+ (name Jsoo_css)
  (public_name jsoo-css)
- (libraries js_of_ocaml)
+ (libraries gen_js_api lwt js_of_ocaml-lwt)
  (preprocess
-  (pps js_of_ocaml-ppx)
+  (pps
+   gen_js_api.ppx
+   js_of_ocaml-ppx
+  )
  )
 )
 
