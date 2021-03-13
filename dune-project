@@ -22,6 +22,7 @@
   js_of_ocaml-ppx
   js_of_ocaml-lwt
   gen_js_api
+  jsoo-react
   lwt
   (alcotest :with-test)
   (odoc :with-doc)

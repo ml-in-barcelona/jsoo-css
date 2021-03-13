@@ -8,4 +8,6 @@ module App = {
   };
 };
 
-React.Dom.renderToElementWithId(<App />, "root");
+React.Dom.renderToElementWithId(<App />, "demo");
+
+Js_of_ocaml.Js.log2("asdf", "1");

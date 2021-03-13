@@ -5,13 +5,14 @@ const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
-const appDirectory = fs.realpathSync(process.cwd());
+const rootPath = path.resolve(process.cwd(), "..");
+const appDirectory = fs.realpathSync(rootPath);
 const paths = {
-  appPublic: path.resolve(appDirectory, "public"),
+  appPublic: path.resolve(appDirectory),
   appBuild: path.resolve(appDirectory, "build"),
-  appPublic: path.resolve(appDirectory, "public"),
-  appHtml: path.resolve(appDirectory, "public/index.html"),
-  appIndexJs: path.resolve(appDirectory, "_build/default/src/index.bc.js"),
+  appPublic: path.resolve(appDirectory),
+  appHtml: path.resolve(appDirectory, "demo/index.html"),
+  appIndexJs: path.resolve(appDirectory, "_build/default/demo/index.bc.js"),
   appConfig: path.resolve(appDirectory, "config/"),
   appSrc: path.resolve(appDirectory, "src"),
   appNodeModules: path.resolve(appDirectory, "node_modules"),

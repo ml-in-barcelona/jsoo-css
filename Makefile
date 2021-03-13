@@ -38,7 +38,9 @@ all:
 
 .PHONY: dev
 dev: ## Install development dependencies
-	cd demo/asset && npm install
+	cd demo && yarn install
+	opam pin add -y gen_js_api https://github.com/jchavarri/gen_js_api.git#typ_var
+	opam pin add -y jsoo-react https://github.com/jchavarri/jsoo-react.git --unlock-base
 	opam install --deps-only --with-test --with-doc -y .
 
 .PHONY: build
@@ -51,7 +53,7 @@ install: all ## Install the packages on the system
 
 .PHONY: start
 start: all ## Serve the application with a local HTTP server
-	cd demo/asset && npm start
+	cd demo && yarn start
 
 # opam exec -- dune build --root . @test/runtest -f
 .PHONY: test
