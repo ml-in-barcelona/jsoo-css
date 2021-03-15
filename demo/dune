@@ -5,7 +5,6 @@
  (js_of_ocaml (javascript_files globals.js))
  (preprocess
   (pps
-   gen_js_api.ppx
    jsoo-react.ppx
    js_of_ocaml-ppx
   )
