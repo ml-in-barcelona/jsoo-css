@@ -1,10 +1,24 @@
 module App = {
+  open Jsoo_css;
+  open Jsoo_css.Core;
+  let rowLayout =
+    Inline.style([|
+      display(`flex),
+      flexDirection(`row),
+      padding2(~v=`px(10), ~h=`px(5)),
+      backgroundColor(`hex("333")),
+      color(Colors.white),
+      borderRadius(`px(4)),
+    |]);
+
+  let h1 = Inline.style([|color(`rgb((123, 123, 123)))|]);
+
   [@react.component]
   let make = () => {
     <div className="App">
-      <h1> {React.string("Hello CodeSandbox")} </h1>
+      <h1 style=h1> {React.string("Hello CodeSandbox")} </h1>
       <h2> {React.string("Start editing to see some magic happen!")} </h2>
-      <p> {Jsoo_css.ReactDOMStyle.make(~display=`none) |> React.string} </p>
+      <div style=rowLayout> {React.string("Flexing")} </div>
     </div>;
   };
 };
