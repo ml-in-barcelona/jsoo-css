@@ -4,18 +4,18 @@ include Core;
 include Colors;
 
 include Core.Make({
-  [@bs.module "emotion"]
+  [@js.global "emotion"]
   external mergeStyles: (. array(string)) => string = "cx";
 
-  [@bs.module "emotion"] external make: (. Js.json) => string = "css";
+  [@js.global "emotion"] external make: (. Js.json) => string = "css";
 
-  [@bs.module "emotion"]
+  [@js.global "emotion"]
   external injectRule: (. Js.json) => unit = "injectGlobal";
 
-  [@bs.module "emotion"]
+  [@js.global "emotion"]
   external injectRaw: (. string) => unit = "injectGlobal";
 
-  [@bs.module "emotion"]
+  [@js.global "emotion"]
   external makeKeyFrames: (. Js.t(Js.json)) => string = "keyframes";
 });
 

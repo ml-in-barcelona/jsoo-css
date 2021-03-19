@@ -12,12 +12,15 @@ module App = {
     |]);
 
   let h1 = Inline.style([|color(`rgb((123, 123, 123)))|]);
+  let h2 = Emotion.make([|color(`hex("C0FFEE"))|]);
 
   [@react.component]
   let make = () => {
     <div className="App">
       <h1 style=h1> {React.string("Hello CodeSandbox")} </h1>
-      <h2> {React.string("Start editing to see some magic happen!")} </h2>
+      <h2 className=h2>
+        {React.string("Start editing to see some magic happen!")}
+      </h2>
       <div style=rowLayout> {React.string("Flexing")} </div>
     </div>;
   };
