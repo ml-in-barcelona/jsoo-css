@@ -5,15 +5,13 @@ open Js_of_ocaml;
    here we specify we want the Types.Url */
 module Url = Types.Url;
 
-type style = Js.json;
-
 type rule =
   | Declaration(string, string)
   | Selector(string, array(rule))
   | PseudoClass(string, array(rule))
   | PseudoClassParam(string, string, array(rule));
 
-let rec ruleToDict = (dict: style, rule) => {
+let rec ruleToDict = (dict: Js.json, rule) => {
   switch (rule) {
   | Declaration(name, value) =>
     Js.Unsafe.set(dict, Js.string(name), Js.string(value))
@@ -31,7 +29,7 @@ let rec ruleToDict = (dict: style, rule) => {
   dict;
 }
 
-and toJson = (rules: array(rule)): style =>
+and toJson = (rules: array(rule)): Js.json =>
   rules |> Array.fold_left(ruleToDict, Js.Unsafe.obj([||]));
 
 module type Interface = {

@@ -10,3 +10,11 @@
 )
 
 (include_subdirs unqualified)
+
+(rule
+ (targets JsooEmotion.ml)
+ (deps JsooEmotion.mli)
+ (action
+  (run %{bin:gen_js_api} -o %{targets} %{deps})
+ )
+)
