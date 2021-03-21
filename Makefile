@@ -55,10 +55,9 @@ install: all ## Install the packages on the system
 start: all ## Serve the application with a local HTTP server
 	cd demo && yarn start
 
-# opam exec -- dune build --root . @test/runtest -f
 .PHONY: test
 test: ## Run the unit tests
-	@echo "There's no tests yet :/"
+	opam exec -- dune build --root . @test/runtest -f
 
 .PHONY: clean
 clean: ## Clean build artifacts and other generated files
