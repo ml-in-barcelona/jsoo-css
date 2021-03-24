@@ -8,6 +8,7 @@ jsoo-css gives a complementary API for dealing with styles in jsoo. Provides `In
 module App = {
   open Jsoo_css;
   open Jsoo_css.Core;
+
   let app =
     Emotion.make([|
       display(`flex),
@@ -16,6 +17,7 @@ module App = {
       alignItems(`center),
       padding(px(80)),
     |]);
+
   let h2 =
     Inline.style([|padding2(~v=`px(10), ~h=`px(5)), color(Colors.grey)|]);
 
