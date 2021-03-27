@@ -39,8 +39,7 @@ jobs:
 
       - name: Pin package
         run: |
-          opam pin add -y gen_js_api https://github.com/jchavarri/gen_js_api.git#typ_var
-          opam pin add -y jsoo-react https://github.com/jchavarri/jsoo-react.git --unlock-base
+          opam pin add -y jsoo-react https://github.com/jchavarri/jsoo-react.git
 
       - name: Query and install external dependencies
         run: opam depext jsoo-css --yes --with-doc --with-test
