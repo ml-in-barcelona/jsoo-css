@@ -39,8 +39,12 @@ all:
 .PHONY: dev
 dev: ## Install development dependencies
 	cd demo && yarn install
-	opam pin add -y gen_js_api https://github.com/jchavarri/gen_js_api.git#typ_var
+	opam pin add -y gen_js_api https://github.com/jchavarri/gen_js_api.git#typ_var --unlock-base
 	opam pin add -y jsoo-react https://github.com/jchavarri/jsoo-react.git --unlock-base
+	opam pin add -y pastel https://github.com/reasonml/reason-native.git --unlock-base
+	opam pin add -y rely https://github.com/reasonml/reason-native.git --unlock-base
+	opam pin add -y cli https://github.com/reasonml/reason-native.git --unlock-base
+	opam pin add -y file-context-printer https://github.com/reasonml/reason-native.git --unlock-base
 	opam install --deps-only --with-test --with-doc -y .
 
 .PHONY: build
@@ -58,6 +62,10 @@ start: all ## Serve the application with a local HTTP server
 .PHONY: test
 test: ## Run the unit tests
 	opam exec -- dune build --root . @test/runtest -f
+
+.PHONY: test-wactch
+test-watch: ## Run the unit tests in watch mode
+	opam exec -- dune build --root . @test/runtest --watch
 
 .PHONY: clean
 clean: ## Clean build artifacts and other generated files

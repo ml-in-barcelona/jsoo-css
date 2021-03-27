@@ -1,0 +1,1 @@
+JsooCssTest.Setup.cli();

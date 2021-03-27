@@ -1,4 +1,20 @@
-(tests
- (names test)
- (libraries alcotest Jsoo_css)
+(library
+ (name JsooCssTest)
+ (ocamlopt_flags -linkall -g)
+ (libraries Jsoo_css rely.lib)
+ (modules
+  (:standard \ Run)
+ )
+)
+
+(executable
+ (name Run)
+ (public_name Run.exe)
+ (libraries JsooCssTest)
+ (modules Run)
+)
+
+(rule
+ (alias runtest)
+ (action (run ./Run.exe))
 )

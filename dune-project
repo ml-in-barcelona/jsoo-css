@@ -12,8 +12,8 @@
 
 (package
  (name jsoo-css)
- (synopsis "Bindings to CSS in jsoo")
- (description "Bindsings to CSS in jsoo")
+ (synopsis "Typed functional interface to CSS in jsoo")
+ (description "Typed functional interface to CSS in jsoo, bindings to inline styles and emotion")
  (depends
   (ocaml (>= 4.08.0))
   (dune (>= 2.0))
@@ -24,7 +24,6 @@
   gen_js_api
   jsoo-react
   lwt
-  (alcotest :with-test)
   (odoc :with-doc)
   ocaml-lsp-server
  )
