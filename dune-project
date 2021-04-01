@@ -18,10 +18,10 @@
   (ocaml (>= 4.08.0))
   (dune (>= 2.0))
   (reason (>= 3.7.0))
+  (gen_js_api (and (>= 1.0.6) (< 1.1.0)))
   js_of_ocaml
   js_of_ocaml-ppx
   js_of_ocaml-lwt
-  gen_js_api
   jsoo-react
   lwt
   (alcotest :with-test)
