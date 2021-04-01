@@ -40,7 +40,7 @@ all:
 dev: ## Install development dependencies
 	cd demo && yarn install
 	opam pin add -y gen_js_api https://github.com/jchavarri/gen_js_api.git#typ_var
-	opam pin add -y jsoo-react https://github.com/jchavarri/jsoo-react.git --unlock-base
+	opam pin add -y jsoo-react https://github.com/reason-in-barcelona/jsoo-react.git --unlock-base
 	opam install --deps-only --with-test --with-doc -y .
 
 .PHONY: build
