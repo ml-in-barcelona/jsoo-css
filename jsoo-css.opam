@@ -37,6 +37,5 @@ build: [
 ]
 dev-repo: "git+https://github.com/davesnx/jsoo-css.git"
 pin-depends: [
-
   [ "jsoo-react" "https://github.com/reason-in-barcelona/jsoo-react.git" ]
 ]
