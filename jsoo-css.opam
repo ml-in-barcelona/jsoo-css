@@ -11,10 +11,10 @@ depends: [
   "ocaml" {>= "4.08.0"}
   "dune" {>= "2.0"}
   "reason" {>= "3.7.0"}
+  "gen_js_api" {>= "1.0.7" & < "1.1.0"}
   "js_of_ocaml"
   "js_of_ocaml-ppx"
   "js_of_ocaml-lwt"
-  "gen_js_api"
   "jsoo-react"
   "lwt"
   "alcotest" {with-test}
@@ -37,6 +37,5 @@ build: [
 ]
 dev-repo: "git+https://github.com/davesnx/jsoo-css.git"
 pin-depends: [
-  [ "gen_js_api" "https://github.com/jchavarri/gen_js_api.git#typ_var" ]
-  [ "jsoo-react" "https://github.com/jchavarri/jsoo-react.git" ]
+  [ "jsoo-react" "https://github.com/reason-in-barcelona/jsoo-react.git" ]
 ]
