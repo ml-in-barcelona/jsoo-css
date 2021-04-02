@@ -43,7 +43,6 @@ dev: ## Install development dependencies
 	opam pin add -y pastel https://github.com/reasonml/reason-native.git --unlock-base
 	opam pin add -y rely https://github.com/reasonml/reason-native.git --unlock-base
 	opam pin add -y cli https://github.com/reasonml/reason-native.git --unlock-base
-	opam pin add -y file-context-printer https://github.com/reasonml/reason-native.git --unlock-base
 	opam install --deps-only --with-test --with-doc -y .
 
 .PHONY: build
