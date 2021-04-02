@@ -1,6 +1,5 @@
 pin-depends: [
-  # [ "gen_js_api" "https://github.com/jchavarri/gen_js_api.git#typ_var" ]
-  [ "jsoo-react" "https://github.com/jchavarri/jsoo-react.git" ]
+  [ "jsoo-react" "https://github.com/reason-in-barcelona/jsoo-react.git" ]
   [ "rely" "https://github.com/reasonml/reason-native.git" ]
   [ "pastel" "https://github.com/reasonml/reason-native.git" ]
   [ "cli" "https://github.com/reasonml/reason-native.git" ]

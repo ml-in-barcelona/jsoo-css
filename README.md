@@ -1,6 +1,6 @@
 # jsoo-css
 
-jsoo-css gives a complementary API for dealing with styles in jsoo. Provides `Inline` and `Emotion` implementations to deal with inline styles or use [emotion.sh](https://emotion.sh) to enable CSS-in-JS mechanism. Plays really well with [jsoo-react](https://github.com/jchavarri/jsoo-react).
+jsoo-css gives a complementary API for dealing with styles in jsoo. Provides `Inline` and `Emotion` implementations to deal with inline styles or use [emotion.sh](https://emotion.sh) to enable CSS-in-JS mechanism. Plays really well with [jsoo-react](https://github.com/reason-in-barcelona/jsoo-react).
 
 ### Example
 
