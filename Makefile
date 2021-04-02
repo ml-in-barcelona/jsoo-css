@@ -38,7 +38,6 @@ all:
 
 .PHONY: dev
 dev: ## Install development dependencies
-	cd demo && yarn install
 	opam pin add -y jsoo-react https://github.com/reason-in-barcelona/jsoo-react.git
 	opam pin add -y pastel https://github.com/reasonml/reason-native.git
 	opam pin add -y cli https://github.com/reasonml/reason-native.git
