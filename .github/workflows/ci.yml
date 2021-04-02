@@ -37,14 +37,10 @@ jobs:
         with:
           ocaml-version: ${{ matrix.ocaml-version }}
 
-      - name: Pin package
-        run: |
-          opam pin add -y jsoo-react https://github.com/reason-in-barcelona/jsoo-react.git
-
       - name: Install dependencies
         if: steps.cache-opam.outputs.cache-hit != 'true'
         run: |
-          opam install . --deps-only --with-doc --with-test --locked --unlock-base
+          make dev
 
       - name: Upgrade dependencies
         run: opam upgrade --fixup

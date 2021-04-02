@@ -1,3 +1,7 @@
 pin-depends: [
   [ "jsoo-react" "https://github.com/reason-in-barcelona/jsoo-react.git" ]
+  [ "pastel" "https://github.com/reasonml/reason-native.git" ]
+  [ "cli" "https://github.com/reasonml/reason-native.git" ]
+  [ "file-context-printer" "https://github.com/reasonml/reason-native.git" ]
+  [ "rely" "https://github.com/reasonml/reason-native.git" ]
 ]
