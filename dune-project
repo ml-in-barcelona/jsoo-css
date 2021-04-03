@@ -2,7 +2,7 @@
 (name jsoo-css)
 
 (source
- (github davesnx/jsoo-css))
+ (github reason-in-barcelona/jsoo-css))
 
 (license MIT)
 (authors "davesnx")

@@ -5,8 +5,8 @@ description: "Bindsings to CSS in jsoo"
 maintainer: ["davesnx"]
 authors: ["davesnx"]
 license: "MIT"
-homepage: "https://github.com/davesnx/jsoo-css"
-bug-reports: "https://github.com/davesnx/jsoo-css/issues"
+homepage: "https://github.com/reason-in-barcelona/jsoo-css"
+bug-reports: "https://github.com/reason-in-barcelona/jsoo-css/issues"
 depends: [
   "ocaml" {>= "4.08.0"}
   "dune" {>= "2.0"}
@@ -35,7 +35,7 @@ build: [
     "@doc" {with-doc}
   ]
 ]
-dev-repo: "git+https://github.com/davesnx/jsoo-css.git"
+dev-repo: "git+https://github.com/reason-in-barcelona/jsoo-css.git"
 pin-depends: [
   [ "jsoo-react" "https://github.com/reason-in-barcelona/jsoo-react.git" ]
 ]
