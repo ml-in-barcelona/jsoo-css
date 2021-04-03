@@ -1,3 +1,5 @@
+/* This file contains the values of the CSS Spec implemented as types */
+
 module Js = {
   module String = {
     let startsWith = (affix, str) => {

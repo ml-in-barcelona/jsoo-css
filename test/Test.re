@@ -3,14 +3,14 @@ open Jsoo_css;
 
 module CssForTest = {
   include Core;
-  include Colors;
   include Core.Make({
+    type t = int;
     exception NotImplemented;
     let mergeStyles = _ => raise(NotImplemented);
+    let toJson = _ => raise(NotImplemented);
     let make = _ => raise(NotImplemented);
     let injectRule = _ => raise(NotImplemented);
     let injectRaw = _ => raise(NotImplemented);
-    let makeKeyFrames = _ => raise(NotImplemented);
   });
 };
 
