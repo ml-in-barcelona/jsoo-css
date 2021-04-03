@@ -7,41 +7,37 @@ module Dict = {
   type item = (string, string);
   type t = array(item);
   let make = (): t => [||];
-  let insert = (key, value, dict): unit => {
-    Array.append(dict, [|(key, value)|]) |> ignore;
+  let insert = (key, value, dict): t => {
+    Array.append(dict, [|(key, value)|]);
   };
-  let map = Array.map;
 };
 
 module CssForTest = {
   exception NotImplemented;
   include Core.Make({
+    let mergeStyles = _ => raise(NotImplemented);
+    let injectRule = _ => raise(NotImplemented);
+    let injectRaw = _ => raise(NotImplemented);
+
     type t = Dict.t;
 
     let rec ruleToDict = (dict, rule) => {
       switch (rule) {
       | Css.Declaration(name, value) => dict |> Dict.insert(name, value)
-      | _ => ()
+      | _ => Dict.make()
       };
-
-      dict;
     }
-
     and toJson = (rules: array(Css.rule)): Dict.t =>
       rules |> Array.fold_left(ruleToDict, [||]);
 
-    let mergeStyles = _ => raise(NotImplemented);
     let make = dict =>
       dict
       |> Array.fold_left(
-           (arr, (k, v)) => Array.append(arr, [|k ++ v|]),
+           (arr, (k, v)) => Array.append(arr, [|k ++ ": " ++ v|]),
            [||],
          )
       |> Array.to_list
       |> String.concat(";");
-
-    let injectRule = _ => raise(NotImplemented);
-    let injectRaw = _ => raise(NotImplemented);
   });
 };
 
