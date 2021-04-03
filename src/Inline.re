@@ -1,13 +1,12 @@
-open Core;
 include Values;
 include Properties;
 include Colors;
 
-include Make({
+include Core.Make({
   type t = Js_of_ocaml.Js.json;
   exception NotImplemented;
 
-  let toJson = Core.toJson;
+  let toJson = Css.toJson;
   let make = (. _) => raise(NotImplemented);
   let mergeStyles = (. _) => raise(NotImplemented);
   let injectRule = (. _) => ();
@@ -16,4 +15,4 @@ include Make({
 
 external unsafeJsonToStyles: Js_of_ocaml.Js.json => React.Dom.style =
   "%identity";
-let style = (. rules) => rules |> toJson |> unsafeJsonToStyles;
+let style = (. rules) => rules |> Css.toJson |> unsafeJsonToStyles;

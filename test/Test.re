@@ -2,14 +2,44 @@ open Setup;
 open Jsoo_css;
 open Properties;
 
+module Dict = {
+  /* Dummy implementation of a dictionary */
+  type item = (string, string);
+  type t = array(item);
+  let make = (): t => [||];
+  let insert = (key, value, dict): unit => {
+    Array.append(dict, [|(key, value)|]) |> ignore;
+  };
+  let map = Array.map;
+};
+
 module CssForTest = {
-  include Core;
+  exception NotImplemented;
   include Core.Make({
-    type t = int;
-    exception NotImplemented;
+    type t = Dict.t;
+
+    let rec ruleToDict = (dict, rule) => {
+      switch (rule) {
+      | Css.Declaration(name, value) => dict |> Dict.insert(name, value)
+      | _ => ()
+      };
+
+      dict;
+    }
+
+    and toJson = (rules: array(Css.rule)): Dict.t =>
+      rules |> Array.fold_left(ruleToDict, [||]);
+
     let mergeStyles = _ => raise(NotImplemented);
-    let toJson = _ => raise(NotImplemented);
-    let make = _ => raise(NotImplemented);
+    let make = dict =>
+      dict
+      |> Array.fold_left(
+           (arr, (k, v)) => Array.append(arr, [|k ++ v|]),
+           [||],
+         )
+      |> Array.to_list
+      |> String.concat(";");
+
     let injectRule = _ => raise(NotImplemented);
     let injectRaw = _ => raise(NotImplemented);
   });

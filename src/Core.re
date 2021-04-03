@@ -1,30 +1,6 @@
-open Css;
-
-let rec ruleToDict = (dict: Js_of_ocaml.Js.json, rule) => {
-  open Js_of_ocaml;
-  switch (rule) {
-  | Declaration(name, value) =>
-    Js.Unsafe.set(dict, Js.string(name), Js.string(value))
-  | Selector(name, ruleset) =>
-    Js.Unsafe.set(dict, Js.string(name), toJson(ruleset))
-  | PseudoClass(name, ruleset) =>
-    Js.Unsafe.set(dict, Js.string(":" ++ name), toJson(ruleset))
-  | PseudoClassParam(name, param, ruleset) =>
-    Js.Unsafe.set(
-      dict,
-      Js.string(":" ++ name ++ "(" ++ param ++ ")"),
-      toJson(ruleset),
-    )
-  };
-  dict;
-}
-
-and toJson = (rules: array(rule)) =>
-  rules |> Array.fold_left(ruleToDict, Js_of_ocaml.Js.Unsafe.obj([||]));
-
 module type API = {
   type t;
-  let toJson: array(rule) => t;
+  let toJson: array(Css.rule) => t;
   let mergeStyles: (. array(string)) => string;
   let injectRule: (. t) => unit;
   let injectRaw: (. string) => unit;
