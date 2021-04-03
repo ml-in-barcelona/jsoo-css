@@ -1,4 +1,9 @@
+open Css;
+open Values;
+open Converter;
 
+let concatArr = (f, separator, arr) =>
+  arr |> Array.map(f) |> Array.to_list |> String.concat(separator);
 
 let alignContent = x =>
   Declaration(
@@ -2045,3 +2050,13 @@ module SVG = {
   let stopColor = x => Declaration("stopColor", string_of_color(x));
   let stopOpacity = x => Declaration("stopOpacity", Float.toString(x));
 };
+
+let important = v =>
+  switch (v) {
+  | Declaration(name, value) => Declaration(name, value ++ " !important")
+  | Selector(_, _)
+  | PseudoClass(_, _)
+  | PseudoClassParam(_, _, _) => v
+  };
+
+let label = label => Declaration("label", label);

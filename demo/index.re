@@ -1,6 +1,6 @@
 module App = {
   open Jsoo_css;
-  open Jsoo_css.Core;
+  open Emotion;
   let app =
     Emotion.make([|
       display(`flex),

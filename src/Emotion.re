@@ -1,7 +1,9 @@
 include Core;
+include Values;
+include Properties;
 include Colors;
 
-include Core.Make({
+include Make({
   type t = Js_of_ocaml.Js.json;
   let toJson = Core.toJson;
   let mergeStyles = JsooEmotion.mergeStyles;

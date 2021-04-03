@@ -1,5 +1,6 @@
 open Setup;
 open Jsoo_css;
+open Properties;
 
 module CssForTest = {
   include Core;
@@ -13,8 +14,6 @@ module CssForTest = {
     let injectRaw = _ => raise(NotImplemented);
   });
 };
-
-open CssForTest;
 
 let css = v => CssForTest.make([|v|]);
 
