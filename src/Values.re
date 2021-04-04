@@ -1,5 +1,14 @@
 /* This file contains the values of the CSS Spec implemented as types */
 
+module Float = {
+  let render = f =>
+    if (Float.round(f) == f) {
+      f |> int_of_float |> string_of_int;
+    } else {
+      string_of_float(f);
+    };
+};
+
 module Js = {
   module String = {
     let startsWith = (affix, str) => {
@@ -49,8 +58,8 @@ module Time = {
 
   let toString =
     fun
-    | `s(v) => Float.to_string(v) ++ "s"
-    | `ms(v) => Float.to_string(v) ++ "ms";
+    | `s(v) => Float.render(v) ++ "s"
+    | `ms(v) => Float.render(v) ++ "ms";
 };
 
 module Percentage = {
@@ -60,7 +69,7 @@ module Percentage = {
 
   let toString =
     fun
-    | `percent(x) => Float.to_string(x) ++ "%";
+    | `percent(x) => Float.render(x) ++ "%";
 };
 
 module Url = {
@@ -112,28 +121,27 @@ module Length = {
 
   let rec toString =
     fun
-    | `ch(x) => Float.to_string(x) ++ "ch"
-    | `em(x) => Float.to_string(x) ++ "em"
-    | `ex(x) => Float.to_string(x) ++ "ex"
-    | `rem(x) => Float.to_string(x) ++ "rem"
-    | `vh(x) => Float.to_string(x) ++ "vh"
-    | `vw(x) => Float.to_string(x) ++ "vw"
-    | `vmin(x) => Float.to_string(x) ++ "vmin"
-    | `vmax(x) => Float.to_string(x) ++ "vmax"
+    | `ch(x) => Float.render(x) ++ "ch"
+    | `em(x) => Float.render(x) ++ "em"
+    | `ex(x) => Float.render(x) ++ "ex"
+    | `rem(x) => Float.render(x) ++ "rem"
+    | `vh(x) => Float.render(x) ++ "vh"
+    | `vw(x) => Float.render(x) ++ "vw"
+    | `vmin(x) => Float.render(x) ++ "vmin"
+    | `vmax(x) => Float.render(x) ++ "vmax"
     | `px(x) => Int.to_string(x) ++ "px"
-    | `pxFloat(x) => Float.to_string(x) ++ "px"
-    | `cm(x) => Float.to_string(x) ++ "cm"
-    | `mm(x) => Float.to_string(x) ++ "mm"
-    | `inch(x) => Float.to_string(x) ++ "in"
-    | `pc(x) => Float.to_string(x) ++ "pc"
+    | `pxFloat(x) => Float.render(x) ++ "px"
+    | `cm(x) => Float.render(x) ++ "cm"
+    | `mm(x) => Float.render(x) ++ "mm"
+    | `inch(x) => Float.render(x) ++ "in"
+    | `pc(x) => Float.render(x) ++ "pc"
     | `pt(x) => Int.to_string(x) ++ "pt"
     | `zero => "0"
-
     | `calc(`add, a, b) =>
       "calc(" ++ toString(a) ++ " + " ++ toString(b) ++ ")"
     | `calc(`sub, a, b) =>
       "calc(" ++ toString(a) ++ " - " ++ toString(b) ++ ")"
-    | `percent(x) => Float.to_string(x) ++ "%";
+    | `percent(x) => Float.render(x) ++ "%";
 };
 
 module Angle = {
@@ -146,10 +154,10 @@ module Angle = {
 
   let toString =
     fun
-    | `deg(x) => Float.to_string(x) ++ "deg"
-    | `rad(x) => Float.to_string(x) ++ "rad"
-    | `grad(x) => Float.to_string(x) ++ "grad"
-    | `turn(x) => Float.to_string(x) ++ "turn";
+    | `deg(x) => Float.render(x) ++ "deg"
+    | `rad(x) => Float.render(x) ++ "rad"
+    | `grad(x) => Float.render(x) ++ "grad"
+    | `turn(x) => Float.render(x) ++ "turn";
 };
 
 module Direction = {
@@ -359,13 +367,13 @@ module TimingFunction = {
     | `steps(i, `end_) => "steps(" ++ Int.to_string(i) ++ ", end)"
     | `cubicBezier(a, b, c, d) =>
       "cubic-bezier("
-      ++ Float.to_string(a)
+      ++ Float.render(a)
       ++ ", "
-      ++ Float.to_string(b)
+      ++ Float.render(b)
       ++ ", "
-      ++ Float.to_string(c)
+      ++ Float.render(c)
       ++ ", "
-      ++ Float.to_string(d)
+      ++ Float.render(d)
       ++ ")";
 };
 
@@ -534,7 +542,7 @@ module Transform = {
   let skewY = a => `skewY(a);
 
   let string_of_scale = (x, y) =>
-    "scale(" ++ Float.to_string(x) ++ ", " ++ Float.to_string(y) ++ ")";
+    "scale(" ++ Float.render(x) ++ ", " ++ Float.render(y) ++ ")";
 
   let string_of_translate3d = (x, y, z) =>
     "translate3d("
@@ -556,23 +564,23 @@ module Transform = {
     | `scale(x, y) => string_of_scale(x, y)
     | `scale3d(x, y, z) =>
       "scale3d("
-      ++ Float.to_string(x)
+      ++ Float.render(x)
       ++ ", "
-      ++ Float.to_string(y)
+      ++ Float.render(y)
       ++ ", "
-      ++ Float.to_string(z)
+      ++ Float.render(z)
       ++ ")"
-    | `scaleX(x) => "scaleX(" ++ Float.to_string(x) ++ ")"
-    | `scaleY(y) => "scaleY(" ++ Float.to_string(y) ++ ")"
-    | `scaleZ(z) => "scaleZ(" ++ Float.to_string(z) ++ ")"
+    | `scaleX(x) => "scaleX(" ++ Float.render(x) ++ ")"
+    | `scaleY(y) => "scaleY(" ++ Float.render(y) ++ ")"
+    | `scaleZ(z) => "scaleZ(" ++ Float.render(z) ++ ")"
     | `rotate(a) => "rotate(" ++ Angle.toString(a) ++ ")"
     | `rotate3d(x, y, z, a) =>
       "rotate3d("
-      ++ Float.to_string(x)
+      ++ Float.render(x)
       ++ ", "
-      ++ Float.to_string(y)
+      ++ Float.render(y)
       ++ ", "
-      ++ Float.to_string(z)
+      ++ Float.render(z)
       ++ ", "
       ++ Angle.toString(a)
       ++ ")"
@@ -771,7 +779,7 @@ module Color = {
 
   let string_of_alpha =
     fun
-    | `num(f) => Float.to_string(f)
+    | `num(f) => Float.render(f)
     | #Percentage.t as pc => Percentage.toString(pc);
 
   let toString =
@@ -878,7 +886,7 @@ module LineHeight = {
   let toString =
     fun
     | `normal => "normal"
-    | `abs(x) => Float.to_string(x);
+    | `abs(x) => Float.render(x);
 };
 
 module WordSpacing = {
@@ -1139,7 +1147,7 @@ module Clear = {
     | `inlineEnd => "inline-end";
 };
 
-module Float = {
+module Float_ = {
   type t = [ | `left | `right | `none | `inlineStart | `inlineEnd];
 
   let toString =
@@ -1251,7 +1259,8 @@ module GridTemplateAreas = {
     | `none => "none"
     | `areas(listOfAreas) =>
       listOfAreas
-      |> List.fold_left((carry, elem) => carry ++ "'" ++ elem ++ "' ", "");
+      |> List.fold_left((carry, elem) => carry ++ "'" ++ elem ++ "' ", "")
+      |> String.trim;
 };
 
 module GridArea = {
@@ -1302,7 +1311,7 @@ module BackdropFilter = {
     | `sepia([ | `num(int) | `percent(float)])
   ];
 
-  let string_of_percent = p => Float.toString(p) ++ "%";
+  let string_of_percent = p => Float.render(p) ++ "%";
 
   let toString =
     fun

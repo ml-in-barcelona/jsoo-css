@@ -33,8 +33,8 @@ let string_of_counter_set = x =>
 
 let string_of_column_gap =
   fun
-  | #ColumnGap.t as gcg => ColumnGap.toString(gcg)
   | #Percentage.t as p => Percentage.toString(p)
+  | #ColumnGap.t as gcg => ColumnGap.toString(gcg)
   | #Length.t as l => Length.toString(l)
   | #Var.t as va => Var.toString(va)
   | #Cascading.t as c => Cascading.toString(c);
