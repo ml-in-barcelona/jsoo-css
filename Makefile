@@ -1,9 +1,8 @@
+project_name = jsoo-css
+DUNE = opam exec -- dune
+opam_file = $(project_name).opam
+
 .DEFAULT_GOAL := all
-
-DUNE = $(DUNE)
-
-ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
-$(eval $(ARGS):;@:)
 
 .PHONY: help
 help: ## Print this help message
@@ -35,9 +34,11 @@ create-switch:
 .PHONY: dev
 init: pin-reason-native ## Install development dependencies
 	git config core.hooksPath .githooks
-	opam pin add -y ocaml-lsp-server https://github.com/ocaml/ocaml-lsp.git
 	opam install -y dune-release merlin ocaml-lsp-server
 	opam install --deps-only --with-test --with-doc -y .
+
+.PHONY: deps
+deps: $(opam_file) ## Alias to update the opam file and install the needed deps
 
 .PHONY: build
 build: ## Build the project, including non installable libraries and executables
@@ -70,6 +71,10 @@ servedoc: doc ## Open odoc documentation with default web browser
 .PHONY: format
 format: ## Format the codebase with ocamlformat
 	$(DUNE) build --root . --auto-promote @fmt
+
+.PHONY: format-check
+format-check: ## Checks if format is correct
+	$(DUNE) build @fmt
 
 .PHONY: watch
 watch: ## Watch for the filesystem and rebuild on every change
