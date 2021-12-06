@@ -15,8 +15,8 @@ help: ## Print this help message
 all:
 	$(DUNE) build --root . @install
 
-.PHONY: pin-reason-native
-pin-reason-native: ## Install development dependencies
+.PHONY: pins
+pins: ## Install development dependencies
 	opam pin add -y jsoo-react https://github.com/reason-in-barcelona/jsoo-react.git
 	opam pin add -y pastel https://github.com/reasonml/reason-native.git
 	opam pin add -y cli https://github.com/reasonml/reason-native.git
@@ -32,7 +32,7 @@ create-switch:
 	opam switch create . 4.12.0 --deps-only --locked
 
 .PHONY: dev
-init: pin-reason-native ## Install development dependencies
+init: pins ## Install development dependencies
 	git config core.hooksPath .githooks
 	opam install -y dune-release merlin ocaml-lsp-server
 	opam install --deps-only --with-test --with-doc -y .
