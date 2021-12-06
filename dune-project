@@ -22,7 +22,6 @@
   js_of_ocaml
   js_of_ocaml-ppx
   js_of_ocaml-lwt
-  (jsoo-react :dev)
   lwt
   (odoc :with-doc)
   ocaml-lsp-server
