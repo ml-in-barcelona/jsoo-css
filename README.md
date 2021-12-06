@@ -1,6 +1,6 @@
 # jsoo-css
 
-jsoo-css gives a complementary API for dealing with styles in jsoo. Provides `Inline` and `Emotion` implementations to deal with inline styles or use [emotion.sh](https://emotion.sh) to enable CSS-in-JS mechanism. Plays really well with [jsoo-react](https://github.com/reason-in-barcelona/jsoo-react).
+jsoo-css gives a complementary API for dealing with styles in jsoo. Provides `Inline` and `Emotion` implementations to deal with inline styles or use [emotion.sh](https://emotion.sh) to enable CSS-in-JS mechanism. Plays really well with [jsoo-react](https://github.com/ml-in-barcelona/jsoo-react).
 
 ### Example
 
@@ -54,7 +54,7 @@ React.Dom.renderToElementWithId(<App />, "demo");
 
 1. Install jsoo-css directly from github (currently not published on opam)
 ```sh
-opam pin add -y jsoo-css https://github.com/reason-in-barcelona/jsoo-css.git
+opam pin add -y jsoo-css https://github.com/ml-in-barcelona/jsoo-css.git
 ```
 
 2. Add `jsoo-css` library on your executable stanza with `modes js`

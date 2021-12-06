@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "description": "Demo for jsoo-css",
   "license": "MIT",
-  "homepage": "https://github.com/reason-in-barcelona/jsoo-css",
+  "homepage": "https://github.com/ml-in-barcelona/jsoo-css",
   "bugs": {
-    "url": "https://github.com/reason-in-barcelona/jsoo-css/issues"
+    "url": "https://github.com/ml-in-barcelona/jsoo-css/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/reason-in-barcelona/jsoo-css.git"
+    "url": "https://github.com/ml-in-barcelona/jsoo-css.git"
   },
   "keywords": [
     "OCaml"

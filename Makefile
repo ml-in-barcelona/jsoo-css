@@ -17,7 +17,7 @@ all:
 
 .PHONY: pins
 pins: ## Install development dependencies
-	opam pin add -y jsoo-react https://github.com/reason-in-barcelona/jsoo-react.git
+	opam pin add -y jsoo-react https://github.com/ml-in-barcelona/jsoo-react.git
 	opam pin add -y pastel https://github.com/reasonml/reason-native.git
 	opam pin add -y cli https://github.com/reasonml/reason-native.git
 	opam pin add -y file-context-printer https://github.com/reasonml/reason-native.git
