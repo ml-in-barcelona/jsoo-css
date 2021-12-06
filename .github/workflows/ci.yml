@@ -40,7 +40,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          make pins
           opam install . --deps-only --with-doc --with-test
           opam install ocamlformat
 
