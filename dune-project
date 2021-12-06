@@ -12,8 +12,8 @@
 
 (package
  (name jsoo-css)
- (synopsis "Typed functional interface to CSS in jsoo")
- (description "Typed functional interface to CSS in jsoo, bindings to inline styles and emotion")
+ (synopsis "CSS Typed functional interface in jsoo")
+ (description "CSS Typed functional interface in jsoo, bindings to inline styles and emotion")
  (depends
   (ocaml (>= 4.08.0))
   (dune (>= 2.0))
