@@ -24,5 +24,10 @@
   js_of_ocaml-lwt
   lwt
   (odoc :with-doc)
+  (jsoo-react :dev)
+  (pastel :dev)
+  (cli :dev)
+  (file-context-printer :dev)
+  (rely :dev)
  )
 )

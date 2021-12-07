@@ -18,6 +18,12 @@ depends: [
   "js_of_ocaml-lwt"
   "lwt"
   "odoc" {with-doc}
+  "ocamlformat" {dev}
+  "jsoo-react" {dev}
+  "pastel" {dev}
+  "cli" {dev}
+  "file-context-printer" {dev}
+  "rely" {dev}
 ]
 build: [
   ["dune" "subst"] {pinned}
@@ -35,9 +41,9 @@ build: [
 ]
 dev-repo: "git+https://github.com/ml-in-barcelona/jsoo-css.git"
 pin-depends: [
-  [ "jsoo-react.dev" "git@github.com:ml-in-barcelona/jsoo-react.git" ]
-  [ "pastel.dev" "git@github.com:reasonml/reason-native.git" ]
-  [ "cli.dev" "git@github.com:reasonml/reason-native.git" ]
-  [ "file-context-printer.dev" "git@github.com:reasonml/reason-native.git" ]
-  [ "rely.dev" "git@github.com:reasonml/reason-native.git" ]
+  [ "jsoo-react.dev" "git+https://github.com/ml-in-barcelona/jsoo-react.git" ]
+  [ "pastel.dev" "git+https://github.com/reasonml/reason-native.git" ]
+  [ "cli.dev" "git+https://github.com/reasonml/reason-native.git" ]
+  [ "file-context-printer.dev" "git+https://github.com/reasonml/reason-native.git" ]
+  [ "rely.dev" "git+https://github.com/reasonml/reason-native.git" ]
 ]

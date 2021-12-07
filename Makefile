@@ -32,9 +32,9 @@ create-switch:
 	opam switch create . 4.12.0 --deps-only --locked --no-install -y
 
 .PHONY: dev
-init: pins ## Install development dependencies
+init: ## Install development dependencies
 	git config core.hooksPath .githooks
-	opam install -y dune dune-release merlin ocaml-lsp-server
+#	opam install -y dune dune-release merlin ocaml-lsp-server
 	opam install --deps-only --with-test --with-doc -y .
 
 .PHONY: deps
