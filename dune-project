@@ -24,6 +24,10 @@
   js_of_ocaml-lwt
   lwt
   (odoc :with-doc)
+  (ocamlformat :dev)
+  (dune-release :dev)
+  (merlin :dev)
+  (ocaml-lsp-server :dev)
   (jsoo-react :dev)
   (pastel :dev)
   (cli :dev)
