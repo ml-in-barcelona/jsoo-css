@@ -2,7 +2,7 @@ project_name = jsoo-css
 DUNE = opam exec -- dune
 opam_file = $(project_name).opam
 
-.DEFAULT_GOAL := all
+.DEFAULT_GOAL := help
 
 .PHONY: help
 help: ## Print this help message
@@ -12,29 +12,27 @@ help: ## Print this help message
 	@echo "";
 
 .PHONY: all
-all:
-	$(DUNE) build --root . @install
-
-.PHONY: pins
-pins: ## Install development dependencies
-	opam pin add -y jsoo-react https://github.com/ml-in-barcelona/jsoo-react.git
-	opam pin add -y pastel https://github.com/reasonml/reason-native.git
-	opam pin add -y cli https://github.com/reasonml/reason-native.git
-	opam pin add -y file-context-printer https://github.com/reasonml/reason-native.git
-	opam pin add -y rely https://github.com/reasonml/reason-native.git
-
-.PHONY: install
-install: all ## Install the packages on the system
+all: ## Install the packages on the system
 	$(DUNE) install --root .
+	$(DUNE) build --root . @install
 
 .PHONY: create-switch
 create-switch:
 	opam switch create . 4.12.0 --deps-only --locked --no-install -y
 
-.PHONY: dev
-init: ## Install development dependencies
+.PHONY: init
+init: setupGitHooks pins install ## Configure everything to develop this repository in local
+
+.PHONY: setupGitHooks
+setupGitHooks: ## Configure git to point githooks in .githooks folder
 	git config core.hooksPath .githooks
-#	opam install -y dune dune-release merlin ocaml-lsp-server
+
+.PHONY: pins
+pins: ## Pin development dependencies
+	opam pin add jsoo-css.dev . --no-action
+
+.PHONY: install
+install: all ## Install development dependencies
 	opam install --deps-only --with-test --with-doc -y .
 
 .PHONY: deps
