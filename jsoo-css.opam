@@ -9,7 +9,7 @@ license: "MIT"
 homepage: "https://github.com/ml-in-barcelona/jsoo-css"
 bug-reports: "https://github.com/ml-in-barcelona/jsoo-css/issues"
 depends: [
-  "ocaml" {>= "4.08.0"}
+  "ocaml" {>= "4.10.2"}
   "dune" {>= "2.0"}
   "reason" {>= "3.7.0"}
   "gen_js_api" {>= "1.0.7" & < "1.1.0"}
@@ -18,7 +18,6 @@ depends: [
   "js_of_ocaml-lwt"
   "lwt"
   "odoc" {with-doc}
-  "ocaml-lsp-server"
 ]
 build: [
   ["dune" "subst"] {pinned}

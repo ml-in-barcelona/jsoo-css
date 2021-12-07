@@ -3,11 +3,7 @@
  (public_name jsoo-css)
  (libraries lwt js_of_ocaml-lwt jsoo-react.lib)
  (preprocess
-  (pps
-   js_of_ocaml-ppx
-  )
- )
-)
+  (pps js_of_ocaml-ppx)))
 
 (include_subdirs unqualified)
 
@@ -15,6 +11,4 @@
  (targets JsooEmotion.ml)
  (deps JsooEmotion.mli)
  (action
-  (run %{bin:gen_js_api} -o %{targets} %{deps})
- )
-)
+  (run %{bin:gen_js_api} -o %{targets} %{deps})))

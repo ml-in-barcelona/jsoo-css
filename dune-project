@@ -15,7 +15,7 @@
  (synopsis "CSS Typed functional interface in jsoo")
  (description "CSS Typed functional interface in jsoo, bindings to inline styles and emotion")
  (depends
-  (ocaml (>= 4.08.0))
+  (ocaml (>= 4.10.2))
   (dune (>= 2.0))
   (reason (>= 3.7.0))
   (gen_js_api (and (>= 1.0.7) (< 1.1.0)))
@@ -24,6 +24,5 @@
   js_of_ocaml-lwt
   lwt
   (odoc :with-doc)
-  ocaml-lsp-server
  )
 )
