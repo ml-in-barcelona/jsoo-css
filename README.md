@@ -1,8 +1,8 @@
 # jsoo-css
 
-jsoo-css gives a complementary API for dealing with styles in jsoo. Provides `Inline` and `Emotion` implementations to deal with inline styles or use [emotion.sh](https://emotion.sh) to enable CSS-in-JS mechanism. Plays really well with [jsoo-react](https://github.com/ml-in-barcelona/jsoo-react).
+jsoo-css gives a complementary API for dealing with styles in jsoo. Provides implementations to inline styles or use [emotion.sh](https://emotion.sh) to enable CSS-in-JS mechanism. Plays really well with [jsoo-react](https://github.com/ml-in-barcelona/jsoo-react) but not only.
 
-### Example
+## Example
 
 ```reason
 module App = {
@@ -52,20 +52,23 @@ React.Dom.renderToElementWithId(<App />, "demo");
 
 ## Instalation
 
-1. Install jsoo-css directly from github (currently not published on opam)
+1. Install from from github (not published on opam)
+
 ```sh
 opam pin add -y jsoo-css https://github.com/ml-in-barcelona/jsoo-css.git
 ```
 
 2. Add `jsoo-css` library on your executable stanza with `modes js`
-```
+
+```dune
 (executables
 (names index)
 (modes js)
 (libraries jsoo-css))
 ```
 
-3. Provide global emotion dependency with `(js_of_ocaml (javascript_files globals.js))`
+3. For emotion, need to provide global dependency with `(js_of_ocaml (javascript_files globals.js))`
+
 ```js
 // globals.js
 joo_global_object.emotion = require("@emotion/css");
@@ -75,4 +78,4 @@ joo_global_object.emotion = require("@emotion/css");
 
 This project is based on [bs-css](https://github.com/reasonml-labs/bs-css), so, many thanks to [@giraud](https://github.com/giraud).
 Thanks to [bs-declaredom](https://github.com/Risto-Stevcev/bs-declaredom) for such a precise HTML and CSS implementation for BuckleScript.
-Thanks to [elm-css](https://github.com/rtfeldman/elm-css) for being an inspiration.
+Thanks to [elm-css](https://github.com/rtfeldman/elm-css) for being an inspiration to overall API design.
