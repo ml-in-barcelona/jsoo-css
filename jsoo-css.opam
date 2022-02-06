@@ -22,11 +22,11 @@ depends: [
   "dune-release" {dev}
   "merlin" {dev}
   "ocaml-lsp-server" {dev}
-  "jsoo-react" {dev}
+  "jsoo-react" {pinned}
   "pastel" {dev}
   "cli" {dev}
   "file-context-printer" {dev}
-  "rely" {dev}
+  "rely" {pinned}
 ]
 build: [
   ["dune" "subst"] {pinned}
