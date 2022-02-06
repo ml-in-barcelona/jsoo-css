@@ -11,13 +11,9 @@
     "type": "git",
     "url": "https://github.com/ml-in-barcelona/jsoo-css.git"
   },
-  "keywords": [
-    "OCaml"
-  ],
   "dependencies": {
     "@emotion/css": "^11.1.3",
     "@emotion/react": "^11.1.5",
-    "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
@@ -27,9 +23,9 @@
     "live-server": "^1.2.1"
   },
   "scripts": {
-    "bundle": "esbuild ../_build/default/demo/index.bc.js --outfile=dist/bundle.js --bundle --sourcemap --target=chrome58,firefox57,safari11,edge16 --define:process.env.NODE_ENV='\"development\"'",
+    "bundle": "node build.mjs",
     "bundle:watch": "yarn bundle --watch --color=true",
-    "dev-server": "PORT=5000 live-server . --host=localhost",
+    "dev-server": "PORT=7000 live-server . --host=localhost",
     "start": "concurrently --names www,js --kill-others yarn:dev-server yarn:bundle:watch",
     "build": "yarn bundle --minify --define:process.env.NODE_ENV='\"production\"'",
     "clean": "rm -rf dist"
