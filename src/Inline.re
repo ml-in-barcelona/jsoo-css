@@ -14,6 +14,6 @@ include Core.Make({
   let injectRaw = (. _) => ();
 });
 
-external unsafeJsonToStyles: Js_of_ocaml.Js.json => React.Dom.style =
+external unsafeJsonToStyles: Js_of_ocaml.Js.json => React.Dom.Style.t =
   "%identity";
 let style = (. rules) => rules |> Css.toJson |> unsafeJsonToStyles;
