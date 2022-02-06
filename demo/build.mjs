@@ -1,9 +1,9 @@
+#!/usr/bin/env node
+
 import Esbuild from 'esbuild';
 import { promises as FS } from 'fs';
 
-const utf8 = 'utf-8';
-
-const readPackageJson = () => FS.readFile('./package.json', utf8);
+const readPackageJson = () => FS.readFile('./package.json', 'utf-8');
 
 const getDependencies = () =>
   readPackageJson().then((packageJson) => {
@@ -19,7 +19,7 @@ getDependencies()
     return Esbuild.build({
       watch: isWatch,
       entryPoints: ['../_build/default/demo/index.bc.js'],
-      outdir: 'dist',
+      outfile: 'dist/bundle.js',
       platform: 'browser',
       bundle: true,
       target: ['chrome58','firefox57','safari11','edge16'],

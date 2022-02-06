@@ -1,8 +1,6 @@
 (executables
  (names index)
  (modes js)
- (libraries jsoo-css gen_js_api lwt js_of_ocaml-lwt jsoo-react.lib)
- (js_of_ocaml
-  (javascript_files globals.js))
+ (libraries jsoo-css gen_js_api jsoo-react.lib)
  (preprocess
   (pps jsoo-react.ppx js_of_ocaml-ppx)))

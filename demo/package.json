@@ -18,15 +18,14 @@
     "react-dom": "^17.0.1"
   },
   "devDependencies": {
-    "concurrently": "^5.3.0",
-    "esbuild": "^0.9.2",
-    "live-server": "^1.2.1"
+    "esbuild": "^0.12.19",
+    "esbuild-serve": "^1.0.1"
   },
   "scripts": {
     "bundle": "node build.mjs",
+    "serve": "node serve.mjs -w",
     "bundle:watch": "yarn bundle --watch --color=true",
-    "dev-server": "PORT=7000 live-server . --host=localhost",
-    "start": "concurrently --names www,js --kill-others yarn:dev-server yarn:bundle:watch",
+    "start": "yarn serve",
     "build": "yarn bundle --minify --define:process.env.NODE_ENV='\"production\"'",
     "clean": "rm -rf dist"
   },
