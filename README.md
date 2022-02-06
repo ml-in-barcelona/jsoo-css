@@ -7,7 +7,6 @@ jsoo-css gives a complementary API for dealing with styles in jsoo. Provides imp
 ```reason
 module App = {
   open Jsoo_css;
-  open Jsoo_css.Core;
 
   let app =
     Emotion.make([|

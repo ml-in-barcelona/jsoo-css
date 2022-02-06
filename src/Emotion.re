@@ -1,6 +1,7 @@
 include Types;
 include Properties;
 include Colors;
+include Core;
 
 include Core.Make({
   type t = Js_of_ocaml.Js.json;
