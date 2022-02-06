@@ -1,4 +1,4 @@
-let hex = Types.Color.hex;
+let hex = Values.Color.hex;
 
 let aliceblue = hex("F0F8FF");
 let antiquewhite = hex("FAEBD7");

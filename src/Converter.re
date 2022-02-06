@@ -1,4 +1,4 @@
-open Types;
+open Values;
 
 let string_of_time = t => Int.to_string(t) ++ "ms";
 
