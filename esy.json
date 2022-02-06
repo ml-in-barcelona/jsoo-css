@@ -1,0 +1,41 @@
+{
+  "name": "jsoo-css",
+  "version": "0.0.1",
+  "description": "CSS Typed functional interface in jsoo, bindings to inline styles and emotion",
+  "author": "davesnx <dsnxmoreno@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/ml-in-barcelona/jsoo-css",
+  "bugs": {
+    "url": "https://github.com/ml-in-barcelona/jsoo-css/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ml-in-barcelona/jsoo-css.git"
+  },
+  "esy": {
+    "build": "dune build -p jsoo-css",
+    "buildsInSource": "_build",
+    "buildEnv": {
+      "ODOC_SYNTAX": "re"
+    }
+  },
+  "dependencies": {
+    "@esy-ocaml/reason": "~3.6.0",
+    "ocaml": "4.10.2000"
+  },
+  "devDependencies": {
+    "@opam/dune": ">=2.8.4",
+    "@opam/ocaml-lsp-server": "1.4.1",
+    "@opam/js_of_ocaml": "3.9.0",
+    "@opam/js_of_ocaml-compiler": "3.9.0",
+    "@reason-native/console": "*",
+    "@reason-native/rely": "*",
+    "@opam/js_of_ocaml-ppx": "3.9.0",
+    "@opam/jsoo-react": "*"
+  },
+  "resolutions": {
+    "@opam/jsoo-react": "ml-in-barcelona/jsoo-react:jsoo-react.opam#9e86c9f",
+    "@reason-native/rely": "jfrolich/reason-native:rely.json#08085a4048974b06aaf3aab918b677b39dea3d18",
+    "@reason-native/console": "jfrolich/reason-native:console.json#08085a4048974b06aaf3aab918b677b39dea3d18"
+  }
+}
