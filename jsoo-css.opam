@@ -15,18 +15,18 @@ depends: [
   "gen_js_api" {>= "1.0.7" & < "1.1.0"}
   "js_of_ocaml"
   "js_of_ocaml-ppx"
-  "js_of_ocaml-lwt" {dev}
-  "lwt" {dev}
+  "js_of_ocaml-lwt"
+  "lwt"
   "odoc" {with-doc}
   "ocamlformat" {dev}
   "dune-release" {dev}
   "merlin" {dev}
   "ocaml-lsp-server" {dev}
-  "jsoo-react" {pinned}
+  "jsoo-react" {dev}
   "pastel" {dev}
   "cli" {dev}
   "file-context-printer" {dev}
-  "rely" {pinned}
+  "rely" {dev}
 ]
 build: [
   ["dune" "subst"] {pinned}
@@ -45,8 +45,8 @@ build: [
 dev-repo: "git+https://github.com/ml-in-barcelona/jsoo-css.git"
 pin-depends: [
   [ "jsoo-react.dev" "git+https://github.com/ml-in-barcelona/jsoo-react.git" {pinned} ]
-  [ "pastel.dev" "git+https://github.com/reasonml/reason-native.git" ]
-  [ "cli.dev" "git+https://github.com/reasonml/reason-native.git" ]
-  [ "file-context-printer.dev" "git+https://github.com/reasonml/reason-native.git" ]
+  [ "pastel.dev" "git+https://github.com/reasonml/reason-native.git" {pinned} ]
+  [ "cli.dev" "git+https://github.com/reasonml/reason-native.git" {pinned} ]
+  [ "file-context-printer.dev" "git+https://github.com/reasonml/reason-native.git" {pinned} ]
   [ "rely.dev" "git+https://github.com/reasonml/reason-native.git" {pinned} ]
 ]
