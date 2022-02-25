@@ -8,6 +8,9 @@ include Core.Make({
   let toJson = Css.toJson;
   let mergeStyles = Emotion_bindings.mergeStyles;
   let make = Emotion_bindings.make;
-  let injectRule = Emotion_bindings.injectRule;
+  let injectRules = Emotion_bindings.injectRules;
   let injectRaw = Emotion_bindings.injectRaw;
+  let global =
+     (. selector, rules) =>
+        Emotion_bindings.injectRules(. selector, toJson(rules));
 });

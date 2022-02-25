@@ -10,10 +10,12 @@ include Core.Make({
   let toJson = Css.toJson;
   let make = (. _) => raise(NotImplemented);
   let mergeStyles = (. _) => raise(NotImplemented);
-  let injectRule = (. _) => ();
+  let injectRules = (. _, _) => ();
   let injectRaw = (. _) => ();
+  let global = (. _, _) => ();
 });
 
 external unsafeJsonToStyles: Js_of_ocaml.Js.json => React.Dom.Style.t =
   "%identity";
+
 let style = (. rules) => rules |> Css.toJson |> unsafeJsonToStyles;

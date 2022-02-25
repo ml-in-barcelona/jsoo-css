@@ -2,9 +2,10 @@ module type API = {
   type t;
   let toJson: array(Css.rule) => t;
   let mergeStyles: (. array(string)) => string;
-  let injectRule: (. t) => unit;
+  let injectRules: (. string, t) => unit;
   let injectRaw: (. string) => unit;
   let make: (. t) => string;
+  let global: (. string, array(Css.rule)) => unit;
   /* let makeKeyFrames: (. t) => string; */
 };
 
@@ -16,11 +17,11 @@ module Make = (Implementation: API) => {
 
   let make =
     (. rules) => Implementation.make(. Implementation.toJson(rules));
-  /* let global =
+
+  let global =
      (. selector, rules) =>
-       Implementation.injectRule(.
-         [|(selector, toJson(rules))|] |> Js.Unsafe.obj,
-       ); */
+        Implementation.injectRules(. selector, Implementation.toJson(rules));
+
   /* let keyframes =
      (. frames) =>
        Implementation.makeKeyFrames(.

@@ -17,13 +17,13 @@
 
     let make style = make_internal Imports.emotion style]
 
-  val injectRule: style -> unit
+  val injectRules: string -> style -> unit
     [@@js.custom
     val inject_rule_internal :
-      Imports.emotion -> style -> unit
+      Imports.emotion -> string -> style -> unit
       [@@js.call "injectGlobal"]
 
-    let injectRule style = inject_rule_internal Imports.emotion style]
+    let injectRules selector style = inject_rule_internal Imports.emotion selector style]
 
   val injectRaw: string -> unit
     [@@js.custom
@@ -33,8 +33,12 @@
 
     let injectRaw style = inject_global_internal Imports.emotion style]
 
-  (* val makeKeyFrames: style Js_of_ocaml.Js.t -> string
+  (* val makeKeyFrames: (int * rule list) list -> animationName
     [@@js.global "emotion.keyframes"] *)
+
+    (* let keyframes: list((int, list(rule))) => animationName;
+
+  let renderKeyframes: (renderer, list((int, list(rule)))) => animationName; *)
 
   val mergeStyles: string array -> string
     [@@js.custom

@@ -1,6 +1,8 @@
-module App = {
-  open Jsoo_css;
+open Jsoo_css;
 
+Emotion.(global(. "h1, h2, h3", [|color(rgb(33, 33, 33))|]));
+
+module App = {
   let app =
     Emotion.(make([|
       display(`flex),
@@ -9,6 +11,7 @@ module App = {
       alignItems(`center),
       padding(px(80)),
     |]));
+
   let h2 =
     Inline.(style([|padding2(~v=`px(10), ~h=`px(5)), color(Colors.grey)|]));
 

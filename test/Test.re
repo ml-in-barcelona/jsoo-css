@@ -17,8 +17,9 @@ module CssForTest = {
   exception NotImplemented;
   include Core.Make({
     let mergeStyles = _ => raise(NotImplemented);
-    let injectRule = _ => raise(NotImplemented);
+    let injectRules = _ => raise(NotImplemented);
     let injectRaw = _ => raise(NotImplemented);
+    let global = (_, _) => raise(NotImplemented);
 
     type t = Dict.t;
 
