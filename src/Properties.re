@@ -1015,36 +1015,36 @@ let zIndex = x => Declaration("zIndex", Int.to_string(x));
 
 let media = (query, rules) => Selector("@media " ++ query, rules);
 let selector = (selector, rules) => Selector(selector, rules);
-let pseudoClass = (selector, rules) => PseudoClass(selector, rules);
+let pseudoclass = (selector, rules) => Pseudoclass(selector, rules);
 
-let active = pseudoClass("active");
-let checked = pseudoClass("checked");
-let default = pseudoClass("default");
-let defined = pseudoClass("defined");
-let disabled = pseudoClass("disabled");
-let empty = pseudoClass("empty");
-let enabled = pseudoClass("enabled");
-let first = pseudoClass("first");
-let firstChild = pseudoClass("first-child");
-let firstOfType = pseudoClass("first-of-type");
-let focus = pseudoClass("focus");
-let focusVisible = pseudoClass("focus-visible");
-let focusWithin = pseudoClass("focus-within");
+let active = pseudoclass("active");
+let checked = pseudoclass("checked");
+let default = pseudoclass("default");
+let defined = pseudoclass("defined");
+let disabled = pseudoclass("disabled");
+let empty = pseudoclass("empty");
+let enabled = pseudoclass("enabled");
+let first = pseudoclass("first");
+let firstChild = pseudoclass("first-child");
+let firstOfType = pseudoclass("first-of-type");
+let focus = pseudoclass("focus");
+let focusVisible = pseudoclass("focus-visible");
+let focusWithin = pseudoclass("focus-within");
 let host = (~selector=?, rules) =>
   switch (selector) {
-  | None => PseudoClass("host", rules)
-  | Some(s) => PseudoClassParam("host", s, rules)
+  | None => Pseudoclass("host", rules)
+  | Some(s) => PseudoclassParam("host", s, rules)
   };
-let hover = pseudoClass("hover");
-let indeterminate = pseudoClass("indeterminate");
-let inRange = pseudoClass("in-range");
-let invalid = pseudoClass("invalid");
-let lang = (code, rules) => PseudoClassParam("lang", code, rules);
-let lastChild = pseudoClass("last-child");
-let lastOfType = pseudoClass("last-of-type");
+let hover = pseudoclass("hover");
+let indeterminate = pseudoclass("indeterminate");
+let inRange = pseudoclass("in-range");
+let invalid = pseudoclass("invalid");
+let lang = (code, rules) => PseudoclassParam("lang", code, rules);
+let lastChild = pseudoclass("last-child");
+let lastOfType = pseudoclass("last-of-type");
 //let left = selector(":left");
-let link = pseudoClass("link");
-let not_ = (selector, rules) => PseudoClassParam("not", selector, rules);
+let link = pseudoclass("link");
+let not_ = (selector, rules) => PseudoclassParam("not", selector, rules);
 
 module Nth = {
   type t = [ | `odd | `even | `n(int) | `adDeclaration(int, int)];
@@ -1056,26 +1056,26 @@ module Nth = {
     | `adDeclaration(x, y) => Int.to_string(x) ++ "n+" ++ Int.to_string(y);
 };
 let nthChild = (x, rules) =>
-  PseudoClassParam("nth-child", Nth.toString(x), rules);
+  PseudoclassParam("nth-child", Nth.toString(x), rules);
 let nthLastChild = (x, rules) =>
-  PseudoClassParam("nth-last-child", Nth.toString(x), rules);
+  PseudoclassParam("nth-last-child", Nth.toString(x), rules);
 let nthLastOfType = (x, rules) =>
-  PseudoClassParam("nth-last-of-type", Nth.toString(x), rules);
+  PseudoclassParam("nth-last-of-type", Nth.toString(x), rules);
 let nthOfType = (x, rules) =>
-  PseudoClassParam("nth-of-type", Nth.toString(x), rules);
-let onlyChild = pseudoClass("only-child");
-let onlyOfType = pseudoClass("only-of-type");
-let optional = pseudoClass("optional");
-let outOfRange = pseudoClass("out-of-range");
-let readOnly = pseudoClass("read-only");
-let readWrite = pseudoClass("read-write");
-let required = pseudoClass("required");
+  PseudoclassParam("nth-of-type", Nth.toString(x), rules);
+let onlyChild = pseudoclass("only-child");
+let onlyOfType = pseudoclass("only-of-type");
+let optional = pseudoclass("optional");
+let outOfRange = pseudoclass("out-of-range");
+let readOnly = pseudoclass("read-only");
+let readWrite = pseudoclass("read-write");
+let required = pseudoclass("required");
 //let right = selector(":right");
-let root = pseudoClass("root");
-let scope = pseudoClass("scope");
-let target = pseudoClass("target");
-let valid = pseudoClass("valid");
-let visited = pseudoClass("visited");
+let root = pseudoclass("root");
+let scope = pseudoclass("scope");
+let target = pseudoclass("target");
+let valid = pseudoclass("valid");
+let visited = pseudoclass("visited");
 
 let after = selector("::after");
 let before = selector("::before");
@@ -2054,8 +2054,8 @@ let important = v =>
   switch (v) {
   | Declaration(name, value) => Declaration(name, value ++ " !important")
   | Selector(_, _)
-  | PseudoClass(_, _)
-  | PseudoClassParam(_, _, _) => v
+  | Pseudoclass(_, _)
+  | PseudoclassParam(_, _, _) => v
   };
 
 let label = label => Declaration("label", label);

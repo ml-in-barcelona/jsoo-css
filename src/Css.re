@@ -1,8 +1,8 @@
 type rule =
   | Declaration(string, string)
   | Selector(string, array(rule))
-  | PseudoClass(string, array(rule))
-  | PseudoClassParam(string, string, array(rule));
+  | Pseudoclass(string, array(rule))
+  | PseudoclassParam(string, string, array(rule));
 
 let rec ruleToDict = (dict: Js_of_ocaml.Js.json, rule) => {
   open Js_of_ocaml;
@@ -11,9 +11,9 @@ let rec ruleToDict = (dict: Js_of_ocaml.Js.json, rule) => {
     Js.Unsafe.set(dict, Js.string(name), Js.string(value))
   | Selector(name, ruleset) =>
     Js.Unsafe.set(dict, Js.string(name), toJson(ruleset))
-  | PseudoClass(name, ruleset) =>
+  | Pseudoclass(name, ruleset) =>
     Js.Unsafe.set(dict, Js.string(":" ++ name), toJson(ruleset))
-  | PseudoClassParam(name, param, ruleset) =>
+  | PseudoclassParam(name, param, ruleset) =>
     Js.Unsafe.set(
       dict,
       Js.string(":" ++ name ++ "(" ++ param ++ ")"),
