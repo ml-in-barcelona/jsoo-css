@@ -2,6 +2,14 @@ open Jsoo_css;
 
 Emotion.(global(. "h1, h2, h3", [|color(rgb(33, 33, 33))|]));
 
+let fadeIn = Emotion.(keyframe(.
+  [|
+    (0, [|transform(scale(0.1, 0.1)), opacity(0.0)|]),
+    (60, [|transform(scale(1.2, 1.2)), opacity(1.0)|]),
+    (100, [|transform(scale(1.0, 1.0)), opacity(1.0)|]),
+  |])
+);
+
 module App = {
   let app =
     Emotion.(make([|

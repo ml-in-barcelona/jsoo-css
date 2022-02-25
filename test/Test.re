@@ -20,6 +20,7 @@ module CssForTest = {
     let injectRules = _ => raise(NotImplemented);
     let injectRaw = _ => raise(NotImplemented);
     let global = (_, _) => raise(NotImplemented);
+    let keyframe = (_) => raise(NotImplemented);
 
     type t = Dict.t;
 

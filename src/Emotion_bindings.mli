@@ -26,19 +26,22 @@
     let injectRules selector style = inject_rule_internal Imports.emotion selector style]
 
   val injectRaw: string -> unit
-    [@@js.custom
+  [@@js.custom
     val inject_global_internal :
       Imports.emotion -> string -> unit
       [@@js.call "injectGlobal"]
 
-    let injectRaw style = inject_global_internal Imports.emotion style]
+    let injectRaw style = inject_global_internal Imports.emotion style
+  ]
 
-  (* val makeKeyFrames: (int * rule list) list -> animationName
-    [@@js.global "emotion.keyframes"] *)
+  val keyframe: Ojs.t -> string
+  [@@js.custom
+    val keyframes_internal :
+      Imports.emotion -> Ojs.t -> string
+      [@@js.call "keyframes"]
 
-    (* let keyframes: list((int, list(rule))) => animationName;
-
-  let renderKeyframes: (renderer, list((int, list(rule)))) => animationName; *)
+    let keyframe frames = keyframes_internal Imports.emotion frames
+  ]
 
   val mergeStyles: string array -> string
     [@@js.custom

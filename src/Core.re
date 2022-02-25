@@ -6,36 +6,14 @@ module type API = {
   let injectRaw: (. string) => unit;
   let make: (. t) => string;
   let global: (. string, array(Css.rule)) => unit;
-  /* let makeKeyFrames: (. t) => string; */
+  let keyframe: (. array((int, array(Css.rule)))) => string;
 };
 
 module Make = (Implementation: API) => {
   type t = Implementation.t;
-  let merge = (. stylenames) => Implementation.mergeStyles(. stylenames);
-
-  let insertRule = (. rule) => Implementation.injectRaw(. rule);
-
-  let make =
-    (. rules) => Implementation.make(. Implementation.toJson(rules));
-
-  let global =
-     (. selector, rules) =>
-        Implementation.injectRules(. selector, Implementation.toJson(rules));
-
-  /* let keyframes =
-     (. frames) =>
-       Implementation.makeKeyFrames(.
-         frames
-         |> Array.fold_left(
-              (. dict, (stop, rules)) => {
-                Js.Unsafe.set(
-                  dict,
-                  Int.to_string(stop) ++ "%",
-                  toJson(rules),
-                );
-                dict;
-              },
-              Js.Unsafe.obj([||]),
-            ),
-       ); */
+  let merge = Implementation.mergeStyles;
+  let insertRule = Implementation.injectRaw;
+  let make = s => Implementation.make(Implementation.toJson(s));
+  let global = Implementation.global
+  let keyframe = Implementation.keyframe;
 };

@@ -13,6 +13,7 @@ include Core.Make({
   let injectRules = (. _, _) => ();
   let injectRaw = (. _) => ();
   let global = (. _, _) => ();
+  let keyframe = (. _) => raise(NotImplemented)
 });
 
 external unsafeJsonToStyles: Js_of_ocaml.Js.json => React.Dom.Style.t =
