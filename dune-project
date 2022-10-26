@@ -21,12 +21,9 @@
   (gen_js_api (and (>= 1.0.7) (< 1.1.0)))
   js_of_ocaml
   js_of_ocaml-ppx
-  js_of_ocaml-lwt
-  lwt
   (odoc :with-doc)
   (ocamlformat :dev)
   (dune-release :dev)
-  (merlin :dev)
   (ocaml-lsp-server :dev)
   (jsoo-react :dev)
   (pastel :dev)
