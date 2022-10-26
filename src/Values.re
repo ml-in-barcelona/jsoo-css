@@ -1,14 +1,5 @@
 /* This file contains the values of the CSS Spec implemented as types */
 
-module Float = {
-  let render = f =>
-    if (Float.round(f) == f) {
-      f |> int_of_float |> string_of_int;
-    } else {
-      string_of_float(f);
-    };
-};
-
 module Js = {
   module String = {
     let startsWith = (affix, str) => {
@@ -20,6 +11,29 @@ module Js = {
       String.equal(start, str);
     };
   };
+
+  module Int = {
+    let toString = Int.to_string;
+  };
+
+  module Float = {
+    let toString = f =>
+      if (Float.round(f) == f) {
+        f |> int_of_float |> string_of_int;
+      } else {
+        string_of_float(f);
+      };
+  };
+};
+
+let join = (strings, separator) => {
+  let rec run = (strings, acc) =>
+    switch (strings) {
+    | [] => acc
+    | [x] => acc ++ x
+    | [x, ...xs] => run(xs, acc ++ x ++ separator)
+    };
+  run(strings, "");
 };
 
 module Cascading = {
@@ -58,8 +72,8 @@ module Time = {
 
   let toString =
     fun
-    | `s(v) => Float.render(v) ++ "s"
-    | `ms(v) => Float.render(v) ++ "ms";
+    | `s(v) => Js.Float.toString(v) ++ "s"
+    | `ms(v) => Js.Float.toString(v) ++ "ms";
 };
 
 module Percentage = {
@@ -69,7 +83,7 @@ module Percentage = {
 
   let toString =
     fun
-    | `percent(x) => Float.render(x) ++ "%";
+    | `percent(x) => Js.Float.toString(x) ++ "%";
 };
 
 module Url = {
@@ -121,27 +135,28 @@ module Length = {
 
   let rec toString =
     fun
-    | `ch(x) => Float.render(x) ++ "ch"
-    | `em(x) => Float.render(x) ++ "em"
-    | `ex(x) => Float.render(x) ++ "ex"
-    | `rem(x) => Float.render(x) ++ "rem"
-    | `vh(x) => Float.render(x) ++ "vh"
-    | `vw(x) => Float.render(x) ++ "vw"
-    | `vmin(x) => Float.render(x) ++ "vmin"
-    | `vmax(x) => Float.render(x) ++ "vmax"
-    | `px(x) => Int.to_string(x) ++ "px"
-    | `pxFloat(x) => Float.render(x) ++ "px"
-    | `cm(x) => Float.render(x) ++ "cm"
-    | `mm(x) => Float.render(x) ++ "mm"
-    | `inch(x) => Float.render(x) ++ "in"
-    | `pc(x) => Float.render(x) ++ "pc"
-    | `pt(x) => Int.to_string(x) ++ "pt"
+    | `ch(x) => Js.Float.toString(x) ++ "ch"
+    | `em(x) => Js.Float.toString(x) ++ "em"
+    | `ex(x) => Js.Float.toString(x) ++ "ex"
+    | `rem(x) => Js.Float.toString(x) ++ "rem"
+    | `vh(x) => Js.Float.toString(x) ++ "vh"
+    | `vw(x) => Js.Float.toString(x) ++ "vw"
+    | `vmin(x) => Js.Float.toString(x) ++ "vmin"
+    | `vmax(x) => Js.Float.toString(x) ++ "vmax"
+    | `px(x) => Js.Int.toString(x) ++ "px"
+    | `pxFloat(x) => Js.Float.toString(x) ++ "px"
+    | `cm(x) => Js.Float.toString(x) ++ "cm"
+    | `mm(x) => Js.Float.toString(x) ++ "mm"
+    | `inch(x) => Js.Float.toString(x) ++ "in"
+    | `pc(x) => Js.Float.toString(x) ++ "pc"
+    | `pt(x) => Js.Int.toString(x) ++ "pt"
     | `zero => "0"
+
     | `calc(`add, a, b) =>
       "calc(" ++ toString(a) ++ " + " ++ toString(b) ++ ")"
     | `calc(`sub, a, b) =>
       "calc(" ++ toString(a) ++ " - " ++ toString(b) ++ ")"
-    | `percent(x) => Float.render(x) ++ "%";
+    | `percent(x) => Js.Float.toString(x) ++ "%";
 };
 
 module Angle = {
@@ -154,10 +169,10 @@ module Angle = {
 
   let toString =
     fun
-    | `deg(x) => Float.render(x) ++ "deg"
-    | `rad(x) => Float.render(x) ++ "rad"
-    | `grad(x) => Float.render(x) ++ "grad"
-    | `turn(x) => Float.render(x) ++ "turn";
+    | `deg(x) => Js.Float.toString(x) ++ "deg"
+    | `rad(x) => Js.Float.toString(x) ++ "rad"
+    | `grad(x) => Js.Float.toString(x) ++ "grad"
+    | `turn(x) => Js.Float.toString(x) ++ "turn";
 };
 
 module Direction = {
@@ -188,6 +203,15 @@ module Position = {
     | `static => "static"
     | `fixed => "fixed"
     | `sticky => "sticky";
+};
+
+module Isolation = {
+  type t = [ | `auto | `isolate];
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `isolate => "isolate";
 };
 
 module Resize = {
@@ -299,12 +323,58 @@ module GridAutoFlow = {
     | `rowDense => "row dense";
 };
 
-module ColumnGap = {
+module Gap = {
   type t = [ | `normal];
 
   let toString =
     fun
     | `normal => "normal";
+};
+module RowGap = Gap;
+module ColumnGap = Gap;
+
+module ScrollBehavior = {
+  type t = [ | `auto | `smooth];
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `smooth => "smooth";
+};
+
+module OverscrollBehavior = {
+  type t = [ | `auto | `contain | `none];
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `contain => "contain"
+    | `none => "none";
+};
+
+module OverflowAnchor = {
+  type t = [ | `auto | `none];
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `none => "none";
+};
+
+module ColumnWidth = {
+  type t = [ | `auto];
+
+  let toString =
+    fun
+    | `auto => "auto";
+};
+
+module CaretColor = {
+  type t = [ | `auto];
+
+  let toString =
+    fun
+    | `auto => "auto";
 };
 
 module VerticalAlign = {
@@ -363,17 +433,17 @@ module TimingFunction = {
     | `easeInOut => "ease-in-out"
     | `stepStart => "step-start"
     | `stepEnd => "step-end"
-    | `steps(i, `start) => "steps(" ++ Int.to_string(i) ++ ", start)"
-    | `steps(i, `end_) => "steps(" ++ Int.to_string(i) ++ ", end)"
+    | `steps(i, `start) => "steps(" ++ Js.Int.toString(i) ++ ", start)"
+    | `steps(i, `end_) => "steps(" ++ Js.Int.toString(i) ++ ", end)"
     | `cubicBezier(a, b, c, d) =>
       "cubic-bezier("
-      ++ Float.render(a)
+      ++ Js.Float.toString(a)
       ++ ", "
-      ++ Float.render(b)
+      ++ Js.Float.toString(b)
       ++ ", "
-      ++ Float.render(c)
+      ++ Js.Float.toString(c)
       ++ ", "
-      ++ Float.render(d)
+      ++ Js.Float.toString(d)
       ++ ")";
 };
 
@@ -384,7 +454,7 @@ module RepeatValue = {
     fun
     | `autoFill => "auto-fill"
     | `autoFit => "auto-fit"
-    | `num(x) => Int.to_string(x);
+    | `num(x) => Js.Int.toString(x);
 };
 
 module ListStyleType = {
@@ -484,7 +554,7 @@ module FontWeight = {
 
   let toString = x =>
     switch (x) {
-    | `num(n) => Int.to_string(n)
+    | `num(n) => Js.Int.toString(n)
     | `thin => "100"
     | `extraLight => "200"
     | `light => "300"
@@ -542,7 +612,7 @@ module Transform = {
   let skewY = a => `skewY(a);
 
   let string_of_scale = (x, y) =>
-    "scale(" ++ Float.render(x) ++ ", " ++ Float.render(y) ++ ")";
+    "scale(" ++ Js.Float.toString(x) ++ ", " ++ Js.Float.toString(y) ++ ")";
 
   let string_of_translate3d = (x, y, z) =>
     "translate3d("
@@ -564,23 +634,23 @@ module Transform = {
     | `scale(x, y) => string_of_scale(x, y)
     | `scale3d(x, y, z) =>
       "scale3d("
-      ++ Float.render(x)
+      ++ Js.Float.toString(x)
       ++ ", "
-      ++ Float.render(y)
+      ++ Js.Float.toString(y)
       ++ ", "
-      ++ Float.render(z)
+      ++ Js.Float.toString(z)
       ++ ")"
-    | `scaleX(x) => "scaleX(" ++ Float.render(x) ++ ")"
-    | `scaleY(y) => "scaleY(" ++ Float.render(y) ++ ")"
-    | `scaleZ(z) => "scaleZ(" ++ Float.render(z) ++ ")"
+    | `scaleX(x) => "scaleX(" ++ Js.Float.toString(x) ++ ")"
+    | `scaleY(y) => "scaleY(" ++ Js.Float.toString(y) ++ ")"
+    | `scaleZ(z) => "scaleZ(" ++ Js.Float.toString(z) ++ ")"
     | `rotate(a) => "rotate(" ++ Angle.toString(a) ++ ")"
     | `rotate3d(x, y, z, a) =>
       "rotate3d("
-      ++ Float.render(x)
+      ++ Js.Float.toString(x)
       ++ ", "
-      ++ Float.render(y)
+      ++ Js.Float.toString(y)
       ++ ", "
-      ++ Float.render(z)
+      ++ Js.Float.toString(z)
       ++ ", "
       ++ Angle.toString(a)
       ++ ")"
@@ -591,7 +661,7 @@ module Transform = {
       "skew(" ++ Angle.toString(x) ++ ", " ++ Angle.toString(y) ++ ")"
     | `skewX(a) => "skewX(" ++ Angle.toString(a) ++ ")"
     | `skewY(a) => "skewY(" ++ Angle.toString(a) ++ ")"
-    | `perspective(x) => "perspective(" ++ Int.to_string(x) ++ ")";
+    | `perspective(x) => "perspective(" ++ Js.Int.toString(x) ++ ")";
 };
 
 module AnimationDirection = {
@@ -622,7 +692,7 @@ module AnimationIterationCount = {
   let toString =
     fun
     | `infinite => "infinite"
-    | `count(x) => Int.to_string(x);
+    | `count(x) => Js.Int.toString(x);
 };
 
 module AnimationPlayState = {
@@ -753,7 +823,6 @@ module Cursor = {
 };
 
 module Color = {
-  /* http://ocsigen.org/js_of_ocaml/1.4/api/CSS.Color */
   type t = [
     | `rgb(int, int, int)
     | `rgba(int, int, int, [ | `num(float) | Percentage.t])
@@ -779,26 +848,26 @@ module Color = {
 
   let string_of_alpha =
     fun
-    | `num(f) => Float.render(f)
+    | `num(f) => Js.Float.toString(f)
     | #Percentage.t as pc => Percentage.toString(pc);
 
   let toString =
     fun
     | `rgb(r, g, b) =>
       "rgb("
-      ++ Int.to_string(r)
+      ++ Js.Int.toString(r)
       ++ ", "
-      ++ Int.to_string(g)
+      ++ Js.Int.toString(g)
       ++ ", "
-      ++ Int.to_string(b)
+      ++ Js.Int.toString(b)
       ++ ")"
     | `rgba(r, g, b, a) =>
       "rgba("
-      ++ Int.to_string(r)
+      ++ Js.Int.toString(r)
       ++ ", "
-      ++ Int.to_string(g)
+      ++ Js.Int.toString(g)
       ++ ", "
-      ++ Int.to_string(b)
+      ++ Js.Int.toString(b)
       ++ ", "
       ++ string_of_alpha(a)
       ++ ")"
@@ -886,7 +955,7 @@ module LineHeight = {
   let toString =
     fun
     | `normal => "normal"
-    | `abs(x) => Float.render(x);
+    | `abs(x) => Js.Float.toString(x);
 };
 
 module WordSpacing = {
@@ -1058,10 +1127,11 @@ module LegacyAlignment = {
 };
 
 module TextAlign = {
-  type t = [ | `left | `right | `center | `justify];
+  type t = [ | `start | `left | `right | `center | `justify];
 
   let toString =
     fun
+    | `start => "start"
     | `left => "left"
     | `right => "right"
     | `center => "center"
@@ -1147,7 +1217,7 @@ module Clear = {
     | `inlineEnd => "inline-end";
 };
 
-module Float_ = {
+module Float = {
   type t = [ | `left | `right | `none | `inlineStart | `inlineEnd];
 
   let toString =
@@ -1223,7 +1293,7 @@ module ColumnCount = {
   let toString =
     fun
     | `auto => "auto"
-    | `count(v) => Int.to_string(v);
+    | `count(v) => Js.Int.toString(v);
 };
 
 module UserSelect = {
@@ -1257,10 +1327,10 @@ module GridTemplateAreas = {
   let toString =
     fun
     | `none => "none"
-    | `areas(listOfAreas) =>
-      listOfAreas
-      |> List.fold_left((carry, elem) => carry ++ "'" ++ elem ++ "' ", "")
-      |> String.trim;
+    | `areas(l) =>
+      String.trim(
+        List.fold_left((carry, elem) => carry ++ "'" ++ elem ++ "' ", "", l),
+      );
 };
 
 module GridArea = {
@@ -1282,13 +1352,13 @@ module GridArea = {
     switch (t) {
     | `auto => "auto"
     | `ident(s) => s
-    | `num(i) => Int.to_string(i)
-    | `numIdent(i, s) => Int.to_string(i) ++ " " ++ s
+    | `num(i) => string_of_int(i)
+    | `numIdent(i, s) => string_of_int(i) ++ " " ++ s
     | `span(e) =>
       "span "
       ++ (
         switch (e) {
-        | `num(i) => Int.to_string(i)
+        | `num(i) => string_of_int(i)
         | `ident(s) => s
         }
       )
@@ -1311,31 +1381,31 @@ module BackdropFilter = {
     | `sepia([ | `num(int) | `percent(float)])
   ];
 
-  let string_of_percent = p => Float.render(p) ++ "%";
+  let string_of_percent = p => Js.Float.toString(p) ++ "%";
 
   let toString =
     fun
     | `blur(#Length.t as b) => "blur(" ++ Length.toString(b) ++ ")"
-    | `brightness(`num(b)) => "brightness(" ++ Int.to_string(b) ++ ")"
+    | `brightness(`num(b)) => "brightness(" ++ string_of_int(b) ++ ")"
     | `brightness(`percent(b)) =>
       "brightness(" ++ string_of_percent(b) ++ ")"
-    | `contrast(`num(c)) => "contrast(" ++ Int.to_string(c) ++ ")"
+    | `contrast(`num(c)) => "contrast(" ++ string_of_int(c) ++ ")"
     | `contrast(`percent(c)) => "contrast(" ++ string_of_percent(c) ++ ")"
-    | `dropShadow(`num(i)) => "drop-shadow(" ++ Int.to_string(i) ++ ")"
+    | `dropShadow(`num(i)) => "drop-shadow(" ++ string_of_int(i) ++ ")"
     | `dropShadow(`percent(i)) =>
       "drop-shadow(" ++ string_of_percent(i) ++ ")"
-    | `grayscale(`num(i)) => "grayscale(" ++ Int.to_string(i) ++ ")"
+    | `grayscale(`num(i)) => "grayscale(" ++ string_of_int(i) ++ ")"
     | `grayscale(`percent(i)) => "grayscale(" ++ string_of_percent(i) ++ ")"
     | `hueRotate(#Angle.t as h) => "hue-rotate(" ++ Angle.toString(h) ++ ")"
     | `hueRotate(`zero) => "hue-rotate(0deg)"
-    | `invert(`num(i)) => "invert(" ++ Int.to_string(i) ++ ")"
+    | `invert(`num(i)) => "invert(" ++ string_of_int(i) ++ ")"
     | `invert(`percent(i)) => "invert(" ++ string_of_percent(i) ++ ")"
     | `none => "none"
-    | `opacity(`num(i)) => "opacity(" ++ Int.to_string(i) ++ ")"
+    | `opacity(`num(i)) => "opacity(" ++ string_of_int(i) ++ ")"
     | `opacity(`percent(i)) => "opacity(" ++ string_of_percent(i) ++ ")"
-    | `saturate(`num(i)) => "saturate(" ++ Int.to_string(i) ++ ")"
+    | `saturate(`num(i)) => "saturate(" ++ string_of_int(i) ++ ")"
     | `saturate(`percent(i)) => "saturate(" ++ string_of_percent(i) ++ ")"
-    | `sepia(`num(i)) => "sepia(" ++ Int.to_string(i) ++ ")"
+    | `sepia(`num(i)) => "sepia(" ++ string_of_int(i) ++ ")"
     | `sepia(`percent(i)) => "sepia(" ++ string_of_percent(i) ++ ")";
 };
 
@@ -1370,6 +1440,38 @@ module BackgroundOrigin = {
 };
 
 module BackgroundPosition = {
+  module X = {
+    type t = [ | `left | `right | `center];
+
+    let toString =
+      fun
+      | `left => "left"
+      | `right => "right"
+      | `center => "center";
+  };
+
+  module Y = {
+    type t = [ | `top | `bottom | `center];
+
+    let toString =
+      fun
+      | `top => "top"
+      | `bottom => "bottom"
+      | `center => "center";
+  };
+
+  type t = [ X.t | Y.t];
+
+  let toString =
+    fun
+    | `left => "left"
+    | `right => "right"
+    | `top => "top"
+    | `bottom => "bottom"
+    | `center => "center";
+};
+
+module MaskPosition = {
   module X = {
     type t = [ | `left | `right | `center];
 
@@ -1452,12 +1554,14 @@ module TextDecorationStyle = {
 };
 
 module Width = {
-  type t = [ | `auto | `fitContent];
+  type t = [ | `auto | `fitContent | `maxContent | `minContent];
 
   let toString =
     fun
     | `auto => "auto"
-    | `fitContent => "fit-content";
+    | `fitContent => "fit-content"
+    | `maxContent => "max-content"
+    | `minContent => "min-content";
 };
 
 module MaxWidth = {
@@ -1508,6 +1612,10 @@ module Gradient = {
     | `repeatingRadialGradient(
         list((Length.t, [< Color.t | Var.t] as 'colorOrVar)),
       )
+    | `conicGradient(
+        Angle.t,
+        list((Length.t, [< Color.t | Var.t] as 'colorOrVar)),
+      )
   ];
 
   let linearGradient = (angle, stops) => `linearGradient((angle, stops));
@@ -1515,12 +1623,12 @@ module Gradient = {
     `repeatingLinearGradient((angle, stops));
   let radialGradient = stops => `radialGradient(stops);
   let repeatingRadialGradient = stops => `repeatingRadialGradient(stops);
+  let conicGradient = (angle, stops) => `conicGradient((angle, stops));
 
   let string_of_color =
     fun
     | #Color.t as co => Color.toString(co)
     | #Var.t as va => Var.toString(va);
-
   let string_of_stops = stops =>
     stops
     |> List.map(((l, c)) =>
@@ -1545,10 +1653,24 @@ module Gradient = {
     | `radialGradient(stops) =>
       "radial-gradient(" ++ string_of_stops(stops) ++ ")"
     | `repeatingRadialGradient(stops) =>
-      "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")";
+      "repeating-radial-gradient(" ++ string_of_stops(stops) ++ ")"
+    | `conicGradient(angle, stops) =>
+      "conic-gradient(from "
+      ++ Angle.toString(angle)
+      ++ ", "
+      ++ string_of_stops(stops)
+      ++ ")";
 };
 
 module BackgroundImage = {
+  type t = [ | `none];
+
+  let toString =
+    fun
+    | `none => "none";
+};
+
+module MaskImage = {
   type t = [ | `none];
 
   let toString =
@@ -1742,7 +1864,7 @@ module CounterIncrement = {
   let toString =
     fun
     | `none => "none"
-    | `increment(name, value) => name ++ " " ++ Int.to_string(value);
+    | `increment(name, value) => name ++ " " ++ string_of_int(value);
 };
 
 module CounterReset = {
@@ -1753,7 +1875,7 @@ module CounterReset = {
   let toString =
     fun
     | `none => "none"
-    | `reset(name, value) => name ++ " " ++ Int.to_string(value);
+    | `reset(name, value) => name ++ " " ++ string_of_int(value);
 };
 
 module CounterSet = {
@@ -1764,7 +1886,7 @@ module CounterSet = {
   let toString =
     fun
     | `none => "none"
-    | `set(name, value) => name ++ " " ++ Int.to_string(value);
+    | `set(name, value) => name ++ " " ++ string_of_int(value);
 };
 
 module Content = {
@@ -1804,4 +1926,32 @@ module SVG = {
       | `contextFill => "context-fill"
       | `contextStroke => "context-stroke";
   };
+};
+
+module TouchAction = {
+  type t = [
+    | `auto
+    | `none
+    | `panX
+    | `panY
+    | `panLeft
+    | `panRight
+    | `panUp
+    | `panDown
+    | `pinchZoom
+    | `manipulation
+  ];
+
+  let toString =
+    fun
+    | `auto => "auto"
+    | `none => "none"
+    | `panX => "pan-x"
+    | `panY => "pan-y"
+    | `panLeft => "pan-left"
+    | `panRight => "pan-right"
+    | `panUp => "pan-up"
+    | `panDown => "pan-down"
+    | `pinchZoom => "pinch-zoom"
+    | `manipulation => "manipulation"
 };

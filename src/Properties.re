@@ -331,7 +331,7 @@ let flex = x =>
     "flex",
     switch (x) {
     | #Flex.t as f => Flex.toString(f)
-    | `num(n) => Float.render(n)
+    | `num(n) => Js.Float.toString(n)
     },
   );
 
@@ -345,9 +345,9 @@ let flexDirection = x =>
     },
   );
 
-let flexGrow = x => Declaration("flexGrow", Float.render(x));
+let flexGrow = x => Declaration("flexGrow", Js.Float.toString(x));
 
-let flexShrink = x => Declaration("flexShrink", Float.render(x));
+let flexShrink = x => Declaration("flexShrink", Js.Float.toString(x));
 
 let flexWrap = x =>
   Declaration(
@@ -363,7 +363,7 @@ let float = x =>
   Declaration(
     "float",
     switch (x) {
-    | #Float_.t as f => Float_.toString(f)
+    | #Float.t as f => Float.toString(f)
     | #Var.t as va => Var.toString(va)
     | #Cascading.t as c => Cascading.toString(c)
     },
@@ -682,7 +682,7 @@ let objectFit = x =>
 let objectPosition = x =>
   Declaration("objectPosition", string_of_backgroundposition(x));
 
-let opacity = x => Declaration("opacity", Float.render(x));
+let opacity = x => Declaration("opacity", Js.Float.toString(x));
 
 let outline = (size, style, color) =>
   Declaration(
@@ -1394,9 +1394,9 @@ let square = `square;
 let flex3 = (~grow, ~shrink, ~basis) =>
   Declaration(
     "flex",
-    Float.render(grow)
+    Js.Float.toString(grow)
     ++ " "
-    ++ Float.render(shrink)
+    ++ Js.Float.toString(shrink)
     ++ " "
     ++ (
       switch (basis) {
@@ -1423,23 +1423,23 @@ let string_of_minmax =
     "calc(" ++ Length.toString(a) ++ " + " ++ Length.toString(b) ++ ")"
   | `calc(`sub, a, b) =>
     "calc(" ++ Length.toString(a) ++ " - " ++ Length.toString(b) ++ ")"
-  | `ch(x) => Float.render(x) ++ "ch"
-  | `cm(x) => Float.render(x) ++ "cm"
-  | `em(x) => Float.render(x) ++ "em"
-  | `ex(x) => Float.render(x) ++ "ex"
-  | `mm(x) => Float.render(x) ++ "mm"
-  | `percent(x) => Float.render(x) ++ "%"
+  | `ch(x) => Js.Float.toString(x) ++ "ch"
+  | `cm(x) => Js.Float.toString(x) ++ "cm"
+  | `em(x) => Js.Float.toString(x) ++ "em"
+  | `ex(x) => Js.Float.toString(x) ++ "ex"
+  | `mm(x) => Js.Float.toString(x) ++ "mm"
+  | `percent(x) => Js.Float.toString(x) ++ "%"
   | `pt(x) => Int.to_string(x) ++ "pt"
   | `px(x) => Int.to_string(x) ++ "px"
-  | `pxFloat(x) => Float.render(x) ++ "px"
-  | `rem(x) => Float.render(x) ++ "rem"
-  | `vh(x) => Float.render(x) ++ "vh"
-  | `vmax(x) => Float.render(x) ++ "vmax"
-  | `vmin(x) => Float.render(x) ++ "vmin"
-  | `vw(x) => Float.render(x) ++ "vw"
-  | `fr(x) => Float.render(x) ++ "fr"
-  | `inch(x) => Float.render(x) ++ "in"
-  | `pc(x) => Float.render(x) ++ "pc"
+  | `pxFloat(x) => Js.Float.toString(x) ++ "px"
+  | `rem(x) => Js.Float.toString(x) ++ "rem"
+  | `vh(x) => Js.Float.toString(x) ++ "vh"
+  | `vmax(x) => Js.Float.toString(x) ++ "vmax"
+  | `vmin(x) => Js.Float.toString(x) ++ "vmin"
+  | `vw(x) => Js.Float.toString(x) ++ "vw"
+  | `fr(x) => Js.Float.toString(x) ++ "fr"
+  | `inch(x) => Js.Float.toString(x) ++ "in"
+  | `pc(x) => Js.Float.toString(x) ++ "pc"
   | `zero => "0"
   | `minContent => "min-content"
   | `maxContent => "max-content";
@@ -1452,23 +1452,23 @@ let string_of_dimension =
     "calc(" ++ Length.toString(a) ++ " + " ++ Length.toString(b) ++ ")"
   | `calc(`sub, a, b) =>
     "calc(" ++ Length.toString(a) ++ " - " ++ Length.toString(b) ++ ")"
-  | `ch(x) => Float.render(x) ++ "ch"
-  | `cm(x) => Float.render(x) ++ "cm"
-  | `em(x) => Float.render(x) ++ "em"
-  | `ex(x) => Float.render(x) ++ "ex"
-  | `mm(x) => Float.render(x) ++ "mm"
-  | `percent(x) => Float.render(x) ++ "%"
+  | `ch(x) => Js.Float.toString(x) ++ "ch"
+  | `cm(x) => Js.Float.toString(x) ++ "cm"
+  | `em(x) => Js.Float.toString(x) ++ "em"
+  | `ex(x) => Js.Float.toString(x) ++ "ex"
+  | `mm(x) => Js.Float.toString(x) ++ "mm"
+  | `percent(x) => Js.Float.toString(x) ++ "%"
   | `pt(x) => Int.to_string(x) ++ "pt"
   | `px(x) => Int.to_string(x) ++ "px"
-  | `pxFloat(x) => Float.render(x) ++ "px"
-  | `rem(x) => Float.render(x) ++ "rem"
-  | `vh(x) => Float.render(x) ++ "vh"
-  | `vmax(x) => Float.render(x) ++ "vmax"
-  | `vmin(x) => Float.render(x) ++ "vmin"
-  | `vw(x) => Float.render(x) ++ "vw"
-  | `fr(x) => Float.render(x) ++ "fr"
-  | `inch(x) => Float.render(x) ++ "in"
-  | `pc(x) => Float.render(x) ++ "pc"
+  | `pxFloat(x) => Js.Float.toString(x) ++ "px"
+  | `rem(x) => Js.Float.toString(x) ++ "rem"
+  | `vh(x) => Js.Float.toString(x) ++ "vh"
+  | `vmax(x) => Js.Float.toString(x) ++ "vmax"
+  | `vmin(x) => Js.Float.toString(x) ++ "vmin"
+  | `vw(x) => Js.Float.toString(x) ++ "vw"
+  | `fr(x) => Js.Float.toString(x) ++ "fr"
+  | `inch(x) => Js.Float.toString(x) ++ "in"
+  | `pc(x) => Js.Float.toString(x) ++ "pc"
   | `zero => "0"
   | `fitContent => "fit-content"
   | `minContent => "min-content"
@@ -1495,23 +1495,23 @@ let gridLengthToJs =
     "calc(" ++ Length.toString(a) ++ " + " ++ Length.toString(b) ++ ")"
   | `calc(`sub, a, b) =>
     "calc(" ++ Length.toString(a) ++ " - " ++ Length.toString(b) ++ ")"
-  | `ch(x) => Float.render(x) ++ "ch"
-  | `cm(x) => Float.render(x) ++ "cm"
-  | `em(x) => Float.render(x) ++ "em"
-  | `ex(x) => Float.render(x) ++ "ex"
-  | `mm(x) => Float.render(x) ++ "mm"
-  | `percent(x) => Float.render(x) ++ "%"
+  | `ch(x) => Js.Float.toString(x) ++ "ch"
+  | `cm(x) => Js.Float.toString(x) ++ "cm"
+  | `em(x) => Js.Float.toString(x) ++ "em"
+  | `ex(x) => Js.Float.toString(x) ++ "ex"
+  | `mm(x) => Js.Float.toString(x) ++ "mm"
+  | `percent(x) => Js.Float.toString(x) ++ "%"
   | `pt(x) => Int.to_string(x) ++ "pt"
   | `px(x) => Int.to_string(x) ++ "px"
-  | `pxFloat(x) => Float.render(x) ++ "px"
-  | `rem(x) => Float.render(x) ++ "rem"
-  | `vh(x) => Float.render(x) ++ "vh"
-  | `inch(x) => Float.render(x) ++ "in"
-  | `pc(x) => Float.render(x) ++ "pc"
-  | `vmax(x) => Float.render(x) ++ "vmax"
-  | `vmin(x) => Float.render(x) ++ "vmin"
-  | `vw(x) => Float.render(x) ++ "vw"
-  | `fr(x) => Float.render(x) ++ "fr"
+  | `pxFloat(x) => Js.Float.toString(x) ++ "px"
+  | `rem(x) => Js.Float.toString(x) ++ "rem"
+  | `vh(x) => Js.Float.toString(x) ++ "vh"
+  | `inch(x) => Js.Float.toString(x) ++ "in"
+  | `pc(x) => Js.Float.toString(x) ++ "pc"
+  | `vmax(x) => Js.Float.toString(x) ++ "vmax"
+  | `vmin(x) => Js.Float.toString(x) ++ "vmin"
+  | `vw(x) => Js.Float.toString(x) ++ "vw"
+  | `fr(x) => Js.Float.toString(x) ++ "fr"
   | `zero => "0"
   | `minContent => "min-content"
   | `maxContent => "max-content"
@@ -1607,8 +1607,8 @@ type filter = [
 let string_of_filter =
   fun
   | `blur(v) => "blur(" ++ Length.toString(v) ++ ")"
-  | `brightness(v) => "brightness(" ++ Float.render(v) ++ "%)"
-  | `contrast(v) => "contrast(" ++ Float.render(v) ++ "%)"
+  | `brightness(v) => "brightness(" ++ Js.Float.toString(v) ++ "%)"
+  | `contrast(v) => "contrast(" ++ Js.Float.toString(v) ++ "%)"
   | `dropShadow(a, b, c, d) =>
     "drop-shadow("
     ++ Length.toString(a)
@@ -1619,12 +1619,12 @@ let string_of_filter =
     ++ " "
     ++ Color.toString(d)
     ++ ")"
-  | `grayscale(v) => "grayscale(" ++ Float.render(v) ++ "%)"
+  | `grayscale(v) => "grayscale(" ++ Js.Float.toString(v) ++ "%)"
   | `hueRotate(v) => "hue-rotate(" ++ Angle.toString(v) ++ ")"
-  | `invert(v) => "invert(" ++ Float.render(v) ++ "%)"
-  | `opacity(v) => "opacity(" ++ Float.render(v) ++ "%)"
-  | `saturate(v) => "saturate(" ++ Float.render(v) ++ "%)"
-  | `sepia(v) => "sepia(" ++ Float.render(v) ++ "%)"
+  | `invert(v) => "invert(" ++ Js.Float.toString(v) ++ "%)"
+  | `opacity(v) => "opacity(" ++ Js.Float.toString(v) ++ "%)"
+  | `saturate(v) => "saturate(" ++ Js.Float.toString(v) ++ "%)"
+  | `sepia(v) => "sepia(" ++ Js.Float.toString(v) ++ "%)"
   | `none => "none"
   | #Url.t as u => Url.toString(u)
   | #Var.t as va => Var.toString(va)
@@ -2004,7 +2004,7 @@ module SVG = {
       },
     );
   let fillOpacity = opacity =>
-    Declaration("fillOpacity", Float.render(opacity));
+    Declaration("fillOpacity", Js.Float.toString(opacity));
   let fillRule = x =>
     Declaration(
       "fillRule",
@@ -2024,9 +2024,9 @@ module SVG = {
     );
   let strokeWidth = x => Declaration("strokeWidth", Length.toString(x));
   let strokeOpacity = opacity =>
-    Declaration("strokeOpacity", Float.render(opacity));
+    Declaration("strokeOpacity", Js.Float.toString(opacity));
   let strokeMiterlimit = x =>
-    Declaration("strokeMiterlimit", Float.render(x));
+    Declaration("strokeMiterlimit", Js.Float.toString(x));
   let strokeLinecap = x =>
     Declaration(
       "strokeLinecap",
@@ -2047,7 +2047,7 @@ module SVG = {
       },
     );
   let stopColor = x => Declaration("stopColor", string_of_color(x));
-  let stopOpacity = x => Declaration("stopOpacity", Float.render(x));
+  let stopOpacity = x => Declaration("stopOpacity", Js.Float.toString(x));
 };
 
 let important = v =>

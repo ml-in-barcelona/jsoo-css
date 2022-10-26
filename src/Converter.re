@@ -2,34 +2,29 @@ open Values;
 
 let string_of_time = t => Int.to_string(t) ++ "ms";
 
-let string_of_content = x =>
-  switch (x) {
+let string_of_content = fun
   | #Content.t as c => Content.toString(c)
   | #Counter.t as c => Counter.toString(c)
   | #Counters.t as c => Counters.toString(c)
   | #Gradient.t as g => Gradient.toString(g)
   | #Url.t as u => Url.toString(u)
   | #Var.t as va => Var.toString(va)
-  | #Cascading.t as c => Cascading.toString(c)
-  };
-let string_of_counter_increment = x =>
-  switch (x) {
+  | #Cascading.t as c => Cascading.toString(c);
+
+let string_of_counter_increment = fun
   | #CounterIncrement.t as o => CounterIncrement.toString(o)
   | #Var.t as va => Var.toString(va)
-  | #Cascading.t as c => Cascading.toString(c)
-  };
-let string_of_counter_reset = x =>
-  switch (x) {
+  | #Cascading.t as c => Cascading.toString(c);
+
+let string_of_counter_reset = fun
   | #CounterReset.t as o => CounterReset.toString(o)
   | #Var.t as va => Var.toString(va)
-  | #Cascading.t as c => Cascading.toString(c)
-  };
-let string_of_counter_set = x =>
-  switch (x) {
+  | #Cascading.t as c => Cascading.toString(c);
+
+let string_of_counter_set = fun
   | #CounterSet.t as o => CounterSet.toString(o)
   | #Var.t as va => Var.toString(va)
-  | #Cascading.t as c => Cascading.toString(c)
-  };
+  | #Cascading.t as c => Cascading.toString(c);
 
 let string_of_column_gap =
   fun
