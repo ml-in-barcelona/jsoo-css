@@ -3,8 +3,8 @@ open Jsoo_css;
 open Properties;
 open Colors;
 
+/* Dummy implementation of a dictionary */
 module Dict = {
-  /* Dummy implementation of a dictionary */
   type item = (string, string);
   type t = array(item);
   let make = (): t => [||];
