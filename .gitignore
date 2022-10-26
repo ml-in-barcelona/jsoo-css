@@ -13,3 +13,5 @@ _build/
 
 # Local OPAM switch
 _opam/
+
+.vscode
