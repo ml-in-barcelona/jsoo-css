@@ -10,20 +10,23 @@ include Core.Make({
   let make = Emotion_bindings.make;
   let injectRules = Emotion_bindings.injectRules;
   let injectRaw = Emotion_bindings.injectRaw;
-  let global = (. selector, rules) => Emotion_bindings.injectRules(. selector, toJson(rules));
-  let keyframe = (. frames) =>
+  let global =
+    (. selector, rules) =>
+      Emotion_bindings.injectRules(. selector, toJson(rules));
+  let keyframe =
+    (. frames) =>
       Emotion_bindings.keyframe(.
-         Array.fold_left(
-            (. dict, (stop, rules)) => {
-              Js_of_ocaml.Js.Unsafe.set(
-                dict,
-                Int.to_string(stop) ++ "%",
-                toJson(rules),
-              );
-              dict;
-            },
-            Js_of_ocaml.Js.Unsafe.obj([||]),
-            frames
-          ),
-       );
+        Array.fold_left(
+          (. dict, (stop, rules)) => {
+            Js_of_ocaml.Js.Unsafe.set(
+              dict,
+              Int.to_string(stop) ++ "%",
+              toJson(rules),
+            );
+            dict;
+          },
+          Js_of_ocaml.Js.Unsafe.obj([||]),
+          frames,
+        ),
+      );
 });
