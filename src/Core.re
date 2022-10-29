@@ -14,6 +14,6 @@ module Make = (Implementation: API) => {
   let merge = Implementation.mergeStyles;
   let insertRule = Implementation.injectRaw;
   let make = s => Implementation.make(Implementation.toJson(s));
-  let global = Implementation.global
+  let global = Implementation.global;
   let keyframe = Implementation.keyframe;
 };
