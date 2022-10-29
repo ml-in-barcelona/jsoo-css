@@ -41,9 +41,9 @@ build: [
 ]
 dev-repo: "git+https://github.com/ml-in-barcelona/jsoo-css.git"
 pin-depends: [
-  [ "jsoo-react.dev" "git+https://github.com/ml-in-barcelona/jsoo-react.git" {pinned} ]
+  [ "jsoo-react.dev" "git+https://github.com/ml-in-barcelona/jsoo-react.git" ]
   [ "pastel.dev" "git+https://github.com/reasonml/reason-native.git" ]
   [ "cli.dev" "git+https://github.com/reasonml/reason-native.git" ]
   [ "file-context-printer.dev" "git+https://github.com/reasonml/reason-native.git" ]
-  [ "rely.dev" "git+https://github.com/reasonml/reason-native.git" {pinned} ]
+  [ "rely.dev" "git+https://github.com/reasonml/reason-native.git" ]
 ]
