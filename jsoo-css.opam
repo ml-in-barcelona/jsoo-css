@@ -19,10 +19,10 @@ depends: [
   "dune-release" {dev}
   "ocaml-lsp-server" {dev}
   "reason" {with-test}
-  "jsoo-react" {dev}
+  "jsoo-react"
   "pastel" {dev}
   "cli" {dev}
-  "file-context-printer" {test}
+  "file-context-printer" {with-test}
   "rely" {test}
 ]
 build: [

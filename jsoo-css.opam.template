@@ -1,5 +1,4 @@
 pin-depends: [
-  [ "jsoo-react.dev" "git+https://github.com/ml-in-barcelona/jsoo-react#main" ]
   [ "pastel.dev" "git+https://github.com/reasonml/reason-native#master" ]
   [ "cli.dev" "git+https://github.com/reasonml/reason-native#master" ]
   [ "file-context-printer.dev" "git+https://github.com/reasonml/reason-native#master" ]
