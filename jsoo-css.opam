@@ -22,8 +22,8 @@ depends: [
   "jsoo-react" {dev}
   "pastel" {dev}
   "cli" {dev}
-  "file-context-printer" {dev}
-  "rely" {dev}
+  "file-context-printer" {test}
+  "rely" {test}
 ]
 build: [
   ["dune" "subst"] {pinned}
