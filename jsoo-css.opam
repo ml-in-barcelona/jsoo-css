@@ -19,7 +19,7 @@ depends: [
   "dune-release" {dev}
   "ocaml-lsp-server" {dev}
   "reason" {with-test}
-  "jsoo-react"
+  "jsoo-react" {dev}
 ]
 build: [
   ["dune" "subst"] {pinned}
@@ -37,9 +37,5 @@ build: [
 ]
 dev-repo: "git+https://github.com/ml-in-barcelona/jsoo-css.git"
 pin-depends: [
-  [ "jsoo-react.dev" "git+https://github.com/ml-in-barcelona/jsoo-react#main" ]
-  [ "pastel.dev" "git+https://github.com/reasonml/reason-native#master" ]
-  [ "cli.dev" "git+https://github.com/reasonml/reason-native#master" ]
-  [ "file-context-printer.dev" "git+https://github.com/reasonml/reason-native#master" ]
-  [ "rely.dev" "git+https://github.com/reasonml/reason-native#master" ]
+  [ "jsoo-react.dev" "git+https://github.com/ml-in-barcelona/jsoo-react#8fda15c39665ac27841c7659422f82ac331e0a01.git" ]
 ]

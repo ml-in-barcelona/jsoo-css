@@ -15,7 +15,7 @@
  (synopsis "CSS Typed functional interface in jsoo")
  (description "CSS Typed functional interface in jsoo, bindings to inline styles and emotion")
  (depends
-  (ocaml (and (>= 4.12.0) (< 5.0.0)))
+  (ocaml (>= 4.12.0))
   (dune (and (>= 2.5) (< 4)))
   (gen_js_api (and (>= 1.0.7) (< 1.1.0)))
   js_of_ocaml
@@ -26,9 +26,5 @@
   (ocaml-lsp-server :dev)
   (reason :with-test)
   (jsoo-react :dev)
-  (pastel :dev)
-  (cli :dev)
-  (file-context-printer :dev)
-  (rely :dev)
  )
 )
