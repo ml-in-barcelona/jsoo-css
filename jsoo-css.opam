@@ -20,10 +20,6 @@ depends: [
   "ocaml-lsp-server" {dev}
   "reason" {with-test}
   "jsoo-react"
-  "pastel" {dev}
-  "cli" {dev}
-  "file-context-printer" {with-test}
-  "rely" {test}
 ]
 build: [
   ["dune" "subst"] {pinned}
